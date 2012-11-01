@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+
+    <definition name="general" path="/jsp/templates/general.jsp">
+        <put name="PHXCSS"                  value="/jsp/defecto/css.jsp" />
+        <put name="PHXJS"                   value="/jsp/defecto/js.jsp" />
+        <put name="PHXDESCRIPTION"          value="/jsp/defecto/description.jsp"/>
+        <put name="PHXKEYWORDS"             value="/jsp/defecto/keywords/keywords.jsp"/>
+        <put name="PHXTITLE"                value="/jsp/defecto/titles/title.jsp" />
+        <put name="PHXHEADER"               value="/jsp/defecto/header.jsp" />
+        <put name="PHXBODY"                 value="/jsp/defecto/body.jsp" />
+        <put name="PHXFOOTER"               value="/jsp/defecto/footer.jsp" />
+    </definition>
+
+
+    <definition name="errorTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/error/error.jsp" />
+    </definition>
+
+    <definition name="homeTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/index.jsp" />
+    </definition>
+
+    <!-- Start Sales -->
+    <definition name="adminSalesTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/sales.jsp" />
+    </definition>
+
+    <definition name="adminSalesOrderTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/sales/order.jsp" />
+    </definition>
+
+    <definition name="adminSalesCompletedTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/sales/completed.jsp" />
+    </definition>
+
+    <definition name="adminSalesFullyCompletedTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/sales/fullyCompleted.jsp" />
+    </definition>
+
+    <!-- End Sales -->
+
+        <!-- Start Products -->
+    <definition name="adminProductsTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/products.jsp" />
+    </definition>
+
+    <definition name="adminProductsViewTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/products/view.jsp" />
+    </definition>
+
+    <definition name="adminPruebaTiles" extends="general" >
+        <put name="PHXBODY"                 value="/jsp/admin/prueba.jsp" />
+    </definition>
+
+    <!-- End Products -->
+</tiles-definitions>

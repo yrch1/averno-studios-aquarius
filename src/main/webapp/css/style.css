@@ -1,0 +1,66 @@
+/* 
+    Document   : style
+    Created on : 13-may-2010, 11:44:47
+    Author     : Veronica Almech
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+.menu_home{
+    width: 723px;
+    margin: 100px auto 0 auto;
+    height: 200px;
+
+}
+
+.usuario{
+    background-image:url('/Aquarius/images/botusuario.jpg');
+    width:201px;
+    height:80px;
+}
+.pedido{
+    background-image:url('/Aquarius/images/botpedido.jpg');
+    width:201px;
+    height:80px;
+}
+.producto{
+    background-image:url('/Aquarius/images/botproducto.jpg');
+    width:201px;
+    height:80px;
+}
+.menu_home ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.menu_home ul li {
+	padding:0;
+	float:left;
+        margin: 0 20px;
+}
+.menu_home ul li a {
+    display:block;
+    width: 201px;
+    height: 44px;    
+}
+.menu_home ul li.usuario a:hover {
+	background:url('/Aquarius/images/botusuario.jpg') no-repeat 0 -80px;
+}
+.menu_home ul li.pedido a:hover {
+	background:url('/Aquarius/images/botpedido.jpg') no-repeat 0 -80px;
+}
+.menu_home ul li.producto a:hover {
+	background:url('/Aquarius/images/botproducto.jpg') no-repeat 0 -80px;      
+}
+.menu_home ul li a span {
+	display:none;
+}
