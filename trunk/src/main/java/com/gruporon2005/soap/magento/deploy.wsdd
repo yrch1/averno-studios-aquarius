@@ -1,0 +1,1099 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from MagentoService WSDL service -->
+
+  <service name="Mage_Api_Model_Server_V2_HandlerPort" provider="java:RPC" style="rpc" use="encoded">
+      <parameter name="wsdlTargetNamespace" value="urn:Magento"/>
+      <parameter name="wsdlServiceElement" value="MagentoService"/>
+      <parameter name="schemaUnqualified" value="urn:Magento"/>
+      <parameter name="wsdlServicePort" value="Mage_Api_Model_Server_V2_HandlerPort"/>
+      <parameter name="className" value="com.gruporon2005.soap.magento.Mage_Api_Model_Server_V2_HandlerBindingImpl"/>
+      <parameter name="wsdlPortType" value="Mage_Api_Model_Server_V2_HandlerPortType"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="endSession" qname="operNS:endSession" xmlns:operNS="urn:Magento" returnQName="endSessionReturn" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="login" qname="operNS:login" xmlns:operNS="urn:Magento" returnQName="loginReturn" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="username" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="apiKey" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="startSession" qname="operNS:startSession" xmlns:operNS="urn:Magento" returnQName="startSessionReturn" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+      </operation>
+      <operation name="resources" qname="operNS:resources" xmlns:operNS="urn:Magento" returnQName="resourcesReturn" returnType="rtns:ArrayOfApis" xmlns:rtns="urn:Magento" returnItemType="tns2:apiEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="globalFaults" qname="operNS:globalFaults" xmlns:operNS="urn:Magento" returnQName="globalFaultsReturn" returnType="rtns:ArrayOfExistsFaltures" xmlns:rtns="urn:Magento" returnItemType="tns2:existsFaltureEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="resourceFaults" qname="operNS:resourceFaults" xmlns:operNS="urn:Magento" returnQName="resourceFaultsReturn" returnType="rtns:ArrayOfExistsFaltures" xmlns:rtns="urn:Magento" returnItemType="tns2:existsFaltureEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="resourceName" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="directoryCountryList" qname="operNS:directoryCountryList" xmlns:operNS="urn:Magento" returnQName="countries" returnType="rtns:directoryCountryEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:directoryCountryEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="directoryRegionList" qname="operNS:directoryRegionList" xmlns:operNS="urn:Magento" returnQName="countries" returnType="rtns:directoryRegionEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:directoryRegionEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="country" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="customerCustomerList" qname="operNS:customerCustomerList" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:customerCustomerEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:customerCustomerEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerCustomerCreate" qname="operNS:customerCustomerCreate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerData" type="tns:customerCustomerEntityToCreate" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerCustomerInfo" qname="operNS:customerCustomerInfo" xmlns:operNS="urn:Magento" returnQName="customerInfo" returnType="rtns:customerCustomerEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="attributes" type="tns:ArrayOfString" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerCustomerUpdate" qname="operNS:customerCustomerUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerData" type="tns:customerCustomerEntityToCreate" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerCustomerDelete" qname="operNS:customerCustomerDelete" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="customerGroupList" qname="operNS:customerGroupList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:customerGroupEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:customerGroupEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="customerAddressList" qname="operNS:customerAddressList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:customerAddressEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:customerAddressEntityItem" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="customerAddressCreate" qname="operNS:customerAddressCreate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="customerId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="addressData" type="tns:customerAddressEntityCreate" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerAddressInfo" qname="operNS:customerAddressInfo" xmlns:operNS="urn:Magento" returnQName="info" returnType="rtns:customerAddressEntityItem" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="addressId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="customerAddressUpdate" qname="operNS:customerAddressUpdate" xmlns:operNS="urn:Magento" returnQName="info" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="addressId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="addressData" type="tns:customerAddressEntityCreate" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="customerAddressDelete" qname="operNS:customerAddressDelete" xmlns:operNS="urn:Magento" returnQName="info" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="addressId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryCurrentStore" qname="operNS:catalogCategoryCurrentStore" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryTree" qname="operNS:catalogCategoryTree" xmlns:operNS="urn:Magento" returnQName="tree" returnType="rtns:catalogCategoryTree" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="parentId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryLevel" qname="operNS:catalogCategoryLevel" xmlns:operNS="urn:Magento" returnQName="tree" returnType="rtns:ArrayOfCatalogCategoryEntitiesNoChildren" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogCategoryEntityNoChildren" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="website" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="parentCategory" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryInfo" qname="operNS:catalogCategoryInfo" xmlns:operNS="urn:Magento" returnQName="info" returnType="rtns:catalogCategoryInfo" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="attributes" type="tns:ArrayOfString" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="catalogCategoryCreate" qname="operNS:catalogCategoryCreate" xmlns:operNS="urn:Magento" returnQName="id" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="parentId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryData" type="tns:catalogCategoryEntityCreate" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryUpdate" qname="operNS:catalogCategoryUpdate" xmlns:operNS="urn:Magento" returnQName="id" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryData" type="tns:catalogCategoryEntityCreate" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryMove" qname="operNS:catalogCategoryMove" xmlns:operNS="urn:Magento" returnQName="id" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="parentId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="afterId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryDelete" qname="operNS:catalogCategoryDelete" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryAssignedProducts" qname="operNS:catalogCategoryAssignedProducts" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogAssignedProductArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogAssignedProduct" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryAssignProduct" qname="operNS:catalogCategoryAssignProduct" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="position" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryUpdateProduct" qname="operNS:catalogCategoryUpdateProduct" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="position" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryRemoveProduct" qname="operNS:catalogCategoryRemoveProduct" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="categoryId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductCurrentStore" qname="operNS:catalogProductCurrentStore" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductList" qname="operNS:catalogProductList" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:catalogProductEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductInfo" qname="operNS:catalogProductInfo" xmlns:operNS="urn:Magento" returnQName="info" returnType="rtns:catalogProductReturnEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="attributes" type="tns:catalogProductRequestAttributes" xmlns:tns="urn:Magento"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductCreate" qname="operNS:catalogProductCreate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="set" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="sku" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productData" type="tns:catalogProductCreateEntity" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="catalogProductUpdate" qname="operNS:catalogProductUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productData" type="tns:catalogProductCreateEntity" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductSetSpecialPrice" qname="operNS:catalogProductSetSpecialPrice" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="specialPrice" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="fromDate" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="toDate" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductGetSpecialPrice" qname="operNS:catalogProductGetSpecialPrice" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductReturnEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductDelete" qname="operNS:catalogProductDelete" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeCurrentStore" qname="operNS:catalogProductAttributeCurrentStore" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeList" qname="operNS:catalogProductAttributeList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogAttributeEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogAttributeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="setId" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeOptions" qname="operNS:catalogProductAttributeOptions" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogAttributeOptionEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogAttributeOptionEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="attributeId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeSetList" qname="operNS:catalogProductAttributeSetList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductAttributeSetEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductAttributeSetEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductTypeList" qname="operNS:catalogProductTypeList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductTypeEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductTypeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeTierPriceInfo" qname="operNS:catalogProductAttributeTierPriceInfo" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductTierPriceEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductTierPriceEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeTierPriceUpdate" qname="operNS:catalogProductAttributeTierPriceUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="tier_price" type="tns:catalogProductTierPriceEntityArray" xmlns:tns="urn:Magento"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryAttributeCurrentStore" qname="operNS:catalogCategoryAttributeCurrentStore" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryAttributeList" qname="operNS:catalogCategoryAttributeList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogAttributeEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogAttributeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogCategoryAttributeOptions" qname="operNS:catalogCategoryAttributeOptions" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogAttributeOptionEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogAttributeOptionEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="attributeId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaCurrentStore" qname="operNS:catalogProductAttributeMediaCurrentStore" xmlns:operNS="urn:Magento" returnQName="storeView" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaList" qname="operNS:catalogProductAttributeMediaList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductImageEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductImageEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaInfo" qname="operNS:catalogProductAttributeMediaInfo" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductImageEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="file" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaTypes" qname="operNS:catalogProductAttributeMediaTypes" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductAttributeMediaTypeEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductAttributeMediaTypeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="setId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaCreate" qname="operNS:catalogProductAttributeMediaCreate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="data" type="tns:catalogProductAttributeMediaCreateEntity" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaUpdate" qname="operNS:catalogProductAttributeMediaUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="file" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="data" type="tns:catalogProductAttributeMediaCreateEntity" xmlns:tns="urn:Magento"/>
+        <parameter qname="storeView" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductAttributeMediaRemove" qname="operNS:catalogProductAttributeMediaRemove" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="file" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkList" qname="operNS:catalogProductLinkList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductLinkEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductLinkEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkAssign" qname="operNS:catalogProductLinkAssign" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="linkedProduct" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="data" type="tns:catalogProductLinkEntity" xmlns:tns="urn:Magento"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkUpdate" qname="operNS:catalogProductLinkUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="linkedProduct" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="data" type="tns:catalogProductLinkEntity" xmlns:tns="urn:Magento"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkRemove" qname="operNS:catalogProductLinkRemove" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="linkedProduct" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="productIdentifierType" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkTypes" qname="operNS:catalogProductLinkTypes" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:ArrayOfString" xmlns:rtns="urn:Magento" returnItemType="tns2:string" xmlns:tns2="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogProductLinkAttributes" qname="operNS:catalogProductLinkAttributes" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogProductLinkAttributeEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogProductLinkAttributeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="type" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderList" qname="operNS:salesOrderList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:salesOrderEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="salesOrderListLimited" qname="operNS:salesOrderListLimited" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:salesOrderEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+        <parameter qname="idArray" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInfo" qname="operNS:salesOrderInfo" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderAddComment" qname="operNS:salesOrderAddComment" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="status" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="comment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="notify" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderHold" qname="operNS:salesOrderHold" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderUnhold" qname="operNS:salesOrderUnhold" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderCancel" qname="operNS:salesOrderCancel" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderCompletar" qname="operNS:salesOrderCompletar" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentList" qname="operNS:salesOrderShipmentList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderShipmentEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:salesOrderShipmentEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="salesOrderShipmentInfo" qname="operNS:salesOrderShipmentInfo" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderShipmentEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="shipmentIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentCreate" qname="operNS:salesOrderShipmentCreate" xmlns:operNS="urn:Magento" returnQName="shipmentIncrementId" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="itemsQty" type="tns:orderItemIdQtyArray" xmlns:tns="urn:Magento"/>
+        <parameter qname="comment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="email" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="includeComment" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentAddComment" qname="operNS:salesOrderShipmentAddComment" xmlns:operNS="urn:Magento" returnQName="shipmentIncrementId" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="shipmentIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="comment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="email" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="includeInEmail" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentAddTrack" qname="operNS:salesOrderShipmentAddTrack" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="shipmentIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="carrier" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="title" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="trackNumber" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentRemoveTrack" qname="operNS:salesOrderShipmentRemoveTrack" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="shipmentIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="trackId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderShipmentGetCarriers" qname="operNS:salesOrderShipmentGetCarriers" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:associativeArray" xmlns:rtns="urn:Magento" returnItemType="tns2:associativeEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="orderIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceList" qname="operNS:salesOrderInvoiceList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderInvoiceEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:salesOrderInvoiceEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="filters" type="tns:filters" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="salesOrderInvoiceInfo" qname="operNS:salesOrderInvoiceInfo" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:salesOrderInvoiceEntity" xmlns:rtns="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceCreate" qname="operNS:salesOrderInvoiceCreate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="itemsQty" type="tns:orderItemIdQtyArray" xmlns:tns="urn:Magento"/>
+        <parameter qname="comment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="email" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="includeComment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceAddComment" qname="operNS:salesOrderInvoiceAddComment" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="comment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="email" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="includeComment" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceCapture" qname="operNS:salesOrderInvoiceCapture" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceVoid" qname="operNS:salesOrderInvoiceVoid" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="salesOrderInvoiceCancel" qname="operNS:salesOrderInvoiceCancel" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="invoiceIncrementId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="catalogInventoryStockItemList" qname="operNS:catalogInventoryStockItemList" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:catalogInventoryStockItemEntityArray" xmlns:rtns="urn:Magento" returnItemType="tns2:catalogInventoryStockItemEntity" xmlns:tns2="urn:Magento" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="products" type="tns:ArrayOfString" xmlns:tns="urn:Magento"/>
+      </operation>
+      <operation name="catalogInventoryStockItemUpdate" qname="operNS:catalogInventoryStockItemUpdate" xmlns:operNS="urn:Magento" returnQName="result" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="urn:Mage_Api_Model_Server_V2_HandlerAction" >
+        <parameter qname="sessionId" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="product" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="data" type="tns:catalogInventoryStockItemUpdateEntity" xmlns:tns="urn:Magento"/>
+      </operation>
+      <parameter name="allowedMethods" value="resources catalogInventoryStockItemUpdate salesOrderInvoiceAddComment salesOrderCompletar catalogCategoryRemoveProduct salesOrderAddComment catalogCategoryInfo catalogProductList catalogProductAttributeMediaCreate customerCustomerList catalogCategoryAttributeOptions customerAddressUpdate customerCustomerUpdate salesOrderCancel catalogProductAttributeTierPriceInfo salesOrderInvoiceCreate customerAddressInfo customerCustomerInfo catalogCategoryDelete catalogProductAttributeMediaList salesOrderShipmentGetCarriers catalogProductUpdate customerAddressList globalFaults login catalogCategoryAssignProduct catalogProductAttributeMediaCurrentStore catalogCategoryLevel customerCustomerCreate catalogProductAttributeMediaRemove customerAddressCreate salesOrderInvoiceCancel salesOrderShipmentAddComment catalogProductCurrentStore catalogProductAttributeMediaUpdate customerAddressDelete catalogProductAttributeCurrentStore salesOrderShipmentAddTrack catalogProductAttributeList catalogProductAttributeOptions catalogCategoryAttributeCurrentStore salesOrderShipmentList salesOrderShipmentInfo salesOrderInvoiceCapture salesOrderList catalogProductLinkUpdate salesOrderInvoiceInfo salesOrderInfo customerCustomerDelete startSession catalogCategoryUpdateProduct salesOrderInvoiceVoid catalogCategoryCreate catalogCategoryCurrentStore catalogCategoryMove catalogCategoryAttributeList catalogProductInfo catalogProductSetSpecialPrice catalogProductLinkList catalogProductAttributeMediaTypes catalogCategoryAssignedProducts catalogProductDelete catalogInventoryStockItemList directoryCountryList catalogProductAttributeMediaInfo directoryRegionList salesOrderShipmentCreate salesOrderUnhold salesOrderListLimited catalogProductLinkTypes customerGroupList catalogProductAttributeTierPriceUpdate catalogProductTypeList salesOrderInvoiceList catalogProductLinkAttributes salesOrderShipmentRemoveTrack catalogProductGetSpecialPrice resourceFaults catalogProductLinkRemove catalogCategoryTree catalogCategoryUpdate endSession catalogProductCreate catalogProductAttributeSetList salesOrderHold catalogProductLinkAssign"/>
+
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentCommentEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentCommentEntity[]"
+        innerType="cmp-ns:salesOrderShipmentCommentEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfCatalogCategoryEntities"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryEntity[]"
+        innerType="cmp-ns:catalogCategoryEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductAttributeMediaCreateEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductAttributeMediaCreateEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerCustomerEntityToCreate"
+        type="java:com.gruporon2005.soap.magento.CustomerCustomerEntityToCreate"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductLinkEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductLinkEntity[]"
+        innerType="cmp-ns:catalogProductLinkEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerAddressEntityItem"
+        type="java:com.gruporon2005.soap.magento.CustomerAddressEntityItem"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:directoryCountryEntityArray"
+        type="java:com.gruporon2005.soap.magento.DirectoryCountryEntity[]"
+        innerType="cmp-ns:directoryCountryEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:associativeArray"
+        type="java:com.gruporon2005.soap.magento.AssociativeEntity[]"
+        innerType="cmp-ns:associativeEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderStatusHistoryEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderStatusHistoryEntity[]"
+        innerType="cmp-ns:salesOrderStatusHistoryEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAttributeEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogAttributeEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerCustomerEntityArray"
+        type="java:com.gruporon2005.soap.magento.CustomerCustomerEntity[]"
+        innerType="cmp-ns:customerCustomerEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:directoryCountryEntity"
+        type="java:com.gruporon2005.soap.magento.DirectoryCountryEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceCommentEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceCommentEntity[]"
+        innerType="cmp-ns:salesOrderInvoiceCommentEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:apiEntity"
+        type="java:com.gruporon2005.soap.magento.ApiEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductEntity[]"
+        innerType="cmp-ns:catalogProductEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogInventoryStockItemUpdateEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogInventoryStockItemUpdateEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductTypeEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductTypeEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:complexFilter"
+        type="java:com.gruporon2005.soap.magento.ComplexFilter"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderItemEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderItemEntity[]"
+        innerType="cmp-ns:salesOrderItemEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderItemEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderItemEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductAttributeMediaTypeEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductAttributeMediaTypeEntity[]"
+        innerType="cmp-ns:catalogProductAttributeMediaTypeEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:existsFaltureEntity"
+        type="java:com.gruporon2005.soap.magento.ExistsFaltureEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductReturnEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductReturnEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:directoryRegionEntityArray"
+        type="java:com.gruporon2005.soap.magento.DirectoryRegionEntity[]"
+        innerType="cmp-ns:directoryRegionEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderStatusHistoryEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderStatusHistoryEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAssignedProduct"
+        type="java:com.gruporon2005.soap.magento.CatalogAssignedProduct"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductImageFileEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductImageFileEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceCommentEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceCommentEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogCategoryEntityNoChildren"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryEntityNoChildren"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderAddressEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderAddressEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductTierPriceEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductTierPriceEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogCategoryTree"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryTree"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAttributeEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogAttributeEntity[]"
+        innerType="cmp-ns:catalogAttributeEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductAttributeSetEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductAttributeSetEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAttributeOptionEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogAttributeOptionEntity[]"
+        innerType="cmp-ns:catalogAttributeOptionEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceEntity[]"
+        innerType="cmp-ns:salesOrderInvoiceEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:associativeEntity"
+        type="java:com.gruporon2005.soap.magento.AssociativeEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfCatalogCategoryEntitiesNoChildren"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryEntityNoChildren[]"
+        innerType="cmp-ns:catalogCategoryEntityNoChildren" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductLinkAttributeEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductLinkAttributeEntity[]"
+        innerType="cmp-ns:catalogProductLinkAttributeEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentTrackEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentTrackEntity[]"
+        innerType="cmp-ns:salesOrderShipmentTrackEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentEntity[]"
+        innerType="cmp-ns:salesOrderShipmentEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:directoryRegionEntity"
+        type="java:com.gruporon2005.soap.magento.DirectoryRegionEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductImageEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductImageEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentItemEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentItemEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductAttributeSetEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductAttributeSetEntity[]"
+        innerType="cmp-ns:catalogProductAttributeSetEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductRequestAttributes"
+        type="java:com.gruporon2005.soap.magento.CatalogProductRequestAttributes"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductLinkEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductLinkEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogInventoryStockItemEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogInventoryStockItemEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAttributeOptionEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogAttributeOptionEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:orderItemIdQty"
+        type="java:com.gruporon2005.soap.magento.OrderItemIdQty"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogCategoryEntityCreate"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryEntityCreate"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:apiMethodEntity"
+        type="java:com.gruporon2005.soap.magento.ApiMethodEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceItemEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceItemEntity[]"
+        innerType="cmp-ns:salesOrderInvoiceItemEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfExistsFaltures"
+        type="java:com.gruporon2005.soap.magento.ExistsFaltureEntity[]"
+        innerType="cmp-ns:existsFaltureEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerGroupEntity"
+        type="java:com.gruporon2005.soap.magento.CustomerGroupEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogCategoryInfo"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryInfo"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerAddressEntityCreate"
+        type="java:com.gruporon2005.soap.magento.CustomerAddressEntityCreate"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductTierPriceEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductTierPriceEntity[]"
+        innerType="cmp-ns:catalogProductTierPriceEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerCustomerEntity"
+        type="java:com.gruporon2005.soap.magento.CustomerCustomerEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfApiMethods"
+        type="java:com.gruporon2005.soap.magento.ApiMethodEntity[]"
+        innerType="cmp-ns:apiMethodEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductTypeEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductTypeEntity[]"
+        innerType="cmp-ns:catalogProductTypeEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogCategoryEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogCategoryEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:orderItemIdQtyArray"
+        type="java:com.gruporon2005.soap.magento.OrderItemIdQty[]"
+        innerType="cmp-ns:orderItemIdQty" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogInventoryStockItemEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogInventoryStockItemEntity[]"
+        innerType="cmp-ns:catalogInventoryStockItemEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentCommentEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentCommentEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductCreateEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductCreateEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerGroupEntityArray"
+        type="java:com.gruporon2005.soap.magento.CustomerGroupEntity[]"
+        innerType="cmp-ns:customerGroupEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:filters"
+        type="java:com.gruporon2005.soap.magento.Filters"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductAttributeMediaTypeEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductAttributeMediaTypeEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfApis"
+        type="java:com.gruporon2005.soap.magento.ApiEntity[]"
+        innerType="cmp-ns:apiEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentTrackEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentTrackEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogAssignedProductArray"
+        type="java:com.gruporon2005.soap.magento.CatalogAssignedProduct[]"
+        innerType="cmp-ns:catalogAssignedProduct" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductLinkAttributeEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductLinkAttributeEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductEntity"
+        type="java:com.gruporon2005.soap.magento.CatalogProductEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderEntity[]"
+        innerType="cmp-ns:salesOrderEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:ArrayOfString"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:customerAddressEntityArray"
+        type="java:com.gruporon2005.soap.magento.CustomerAddressEntityItem[]"
+        innerType="cmp-ns:customerAddressEntityItem" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderInvoiceItemEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderInvoiceItemEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:complexFilterArray"
+        type="java:com.gruporon2005.soap.magento.ComplexFilter[]"
+        innerType="cmp-ns:complexFilter" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderShipmentItemEntityArray"
+        type="java:com.gruporon2005.soap.magento.SalesOrderShipmentItemEntity[]"
+        innerType="cmp-ns:salesOrderShipmentItemEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:salesOrderPaymentEntity"
+        type="java:com.gruporon2005.soap.magento.SalesOrderPaymentEntity"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="urn:Magento"
+        qname="ns:catalogProductImageEntityArray"
+        type="java:com.gruporon2005.soap.magento.CatalogProductImageEntity[]"
+        innerType="cmp-ns:catalogProductImageEntity" xmlns:cmp-ns="urn:Magento"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+  </service>
+</deployment>

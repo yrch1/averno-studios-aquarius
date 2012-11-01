@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    Document   : storeInfo.xml
+    Created on : 30 de abril de 2010, 16:28
+    Author     : yrch
+    Description:
+        Purpose of the document follows.
+-->
+
+<stores>
+    <store>
+        <id>1</id>
+        <nemo>ABC</nemo>
+        <requester>LATIENDADEABC</requester>
+    </store>
+
+    <store>
+        <id>2</id>
+        <nemo>LDW</nemo>
+        <requester>LIBERTAD DIGITAL</requester>
+    </store>
+
+    <store>
+        <id>3</id>
+        <nemo>CC</nemo>
+        <requester>CANAL COCINA</requester>
+    </store>
+</stores>

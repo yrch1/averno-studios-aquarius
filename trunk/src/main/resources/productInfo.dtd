@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/productInfo.dtd
+
+-->
+
+<!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE products SYSTEM "productInfo.dtd">
+
+    <products>
+    ...
+    </products>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT products (product)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT product (adapter|owner|sku)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT sku EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT owner EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT adapter EMPTY>
