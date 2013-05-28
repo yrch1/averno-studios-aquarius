@@ -4,6 +4,7 @@ import com.gruporon2005.aquarius.bean.Product;
 import com.gruporon2005.aquarius.bean.SessionBean;
 import com.gruporon2005.aquarius.bean.Store;
 import com.gruporon2005.soap.magento.AssociativeEntity;
+import com.gruporon2005.soap.magento.CatalogProductReturnEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
 import com.gruporon2005.soap.magento.CustomerCustomerEntity;
 import com.gruporon2005.soap.magento.Filters;
@@ -12,6 +13,8 @@ import com.gruporon2005.soap.magento.MagentoServiceLocator;
 import com.gruporon2005.soap.magento.SalesOrderEntity;
 import com.gruporon2005.soap.magento.SalesOrderItemEntity;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -87,7 +90,8 @@ public class OrderHelper {
 
             magento.endSession(sessionId);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Error en getOrderList", e);
 
         }
@@ -116,10 +120,11 @@ public class OrderHelper {
 
             magento.endSession(sessionId);
 
-        } catch (org.apache.axis.AxisFault fault) {
-            fault.printStackTrace();
+        }
+        catch (org.apache.axis.AxisFault fault) {
             log.error(fault.getFaultString());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Error en getOrderInfo", e);
 
         }
@@ -127,11 +132,42 @@ public class OrderHelper {
         return orderInfo;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public CatalogProductReturnEntity getProductInfo(String id, String handlerPortEndpointAddress) {
+        CatalogProductReturnEntity productInfo = null;
+        try {
+
+            MagentoServiceLocator service = new MagentoServiceLocator();
+            service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+            Mage_Api_Model_Server_V2_HandlerPortType magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            String sessionId = magento.login("soap", "test123");
+
+
+            productInfo = magento.catalogProductInfo(sessionId, id, null, null, null);
+
+
+            magento.endSession(sessionId);
+
+        }
+        catch (Exception e) {
+            log.error("El producto con sku " + id + " no existe");
+
+        }
+
+        return productInfo;
+    }
+
     public void exportOrder(OutputStream out, String[] orderIds, SessionBean sessionBean, String handlerPortEndpointAddress) {
         SalesOrderEntity[] orderList;
         CustomerCustomerEntity customerInfo;
         SalesOrderItemEntity[] items;
         SalesOrderEntity orderInfo;
+
 
 
 
@@ -172,7 +208,7 @@ public class OrderHelper {
 
 
                 //ajuste de las columnas al contenido
-                for (int i = 0; i < 18; i++) {
+                for (int i = 0; i < 20; i++) {
                     sheet.autoSizeColumn(i);
                 }
 
@@ -275,15 +311,27 @@ public class OrderHelper {
                 cell.setCellValue("OBSERVACIONES");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(18);
-                cell.setCellValue("MAGENTO ID");
+                if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
+                    cell = cabecera.createCell(18);
+                    cell.setCellValue("MAGENTO ID");
+                    cell.setCellStyle(style);
+                    cell = cabecera.createCell(19);
+                    cell.setCellValue("Email Contacto");
+                    cell.setCellStyle(style);
+                } else {
+                    cell = cabecera.createCell(18);
+                    cell.setCellValue("Email Contacto");
+                    cell.setCellStyle(style);
+                    cell = cabecera.createCell(19);
+                    cell.setCellValue("M�todo de pago");
+                    cell.setCellStyle(style);
+                }
+
+
+
+                cell = cabecera.createCell(20);
+                cell.setCellValue("Precio");
                 cell.setCellStyle(style);
-
-                cell = cabecera.createCell(19);
-                cell.setCellValue("Email Contacto");
-                cell.setCellStyle(style);
-
-
 
 
                 //
@@ -306,6 +354,9 @@ public class OrderHelper {
 
                 Filters filtros = new Filters();
 
+
+                log.error("Se van a procesar los pedidos -> " + ids);
+
                 ComplexFilter cmp[] = new ComplexFilter[1];
                 cmp[0] = new ComplexFilter("increment_id", new AssociativeEntity("in", ids));
 
@@ -317,7 +368,6 @@ public class OrderHelper {
 
                     int i = 0, pos = 0;
                     for (SalesOrderEntity order : orderList) {
-
 
 
                         orderInfo = magento.salesOrderInfo(sessionId, order.getIncrement_id());
@@ -363,7 +413,7 @@ public class OrderHelper {
                         cell.setCellStyle(style2);
 
                         cell = row.createCell(7);
-                         cell.setCellValue(dni);
+                        cell.setCellValue(dni);
                         cell.setCellStyle(style2);
 
 
@@ -410,13 +460,25 @@ public class OrderHelper {
                         cell.setCellValue("");
                         cell.setCellStyle(style2);
 
-                        cell = row.createCell(18);
-                        cell.setCellValue(storeBean.getNemo() + "-" + orderInfo.getIncrement_id());
-                        cell.setCellStyle(style2);
+                        if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
+                            cell = row.createCell(18);
+                            cell.setCellValue(storeBean.getNemo() + "-" + orderInfo.getIncrement_id());
+                            cell.setCellStyle(style2);
+                            cell = row.createCell(19);
+                            cell.setCellValue(orderInfo.getCustomer_email());
+                            cell.setCellStyle(style2);
+                        } else {
+                            cell = row.createCell(18);
+                            cell.setCellValue(orderInfo.getCustomer_email());
+                            cell.setCellStyle(style2);
+                            cell = row.createCell(19);
+                            cell.setCellValue(orderInfo.getPayment().getMethod());
+                            cell.setCellStyle(style2);
+                        }
 
-                        cell = row.createCell(19);
-                        cell.setCellValue(orderInfo.getCustomer_email());
-                        cell.setCellStyle(style2);
+
+
+
 
 
 
@@ -426,8 +488,28 @@ public class OrderHelper {
                             String skuCompuesto = "";
                             for (SalesOrderItemEntity item : items) {
 
+
+                                DecimalFormat df = new DecimalFormat("#,##0.00");
+
+                                BigDecimal precio = new BigDecimal(item.getOriginal_price());
+                                BigDecimal impuestos = new BigDecimal(item.getBase_tax_amount());
+                                cell = row.createCell(20);
+                                cell.setCellValue(df.format(precio.add(impuestos)));
+                                cell.setCellStyle(style2);
+
                                 if (item.getProduct_type().equals("configurable")) {
-                                    skuCompuesto = item.getSku();
+                                    try {
+                                        CatalogProductReturnEntity a = getProductInfo(item.getProduct_id(), handlerPortEndpointAddress);
+                                        if (a != null) {
+                                            skuCompuesto = a.getSku();
+                                        }
+
+                                    }
+                                    catch (Exception e1) {
+                                        log.error("El producto ->" + item.getSku() + " no se ha podido obtener ", e1);
+                                    }
+
+
                                     continue;
                                 } else {
                                     skuCompuesto += item.getSku();
@@ -489,7 +571,7 @@ public class OrderHelper {
 
 
                                                 Product productInfoAdditional = (Product) sessionBean.getProductInfoHash().get(productInfo.getAdditional());
-                                                owner = (productInfo.getOwner());
+                                                owner = ( productInfo.getOwner() );
 
                                                 cell = row.createCell(0);
                                                 cell.setCellValue(String.format(storeBean.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
@@ -528,7 +610,8 @@ public class OrderHelper {
                                     } else {
                                         log.error("Falta por dar de alta este producto " + skuCompuesto);
                                     }
-                                } catch (Exception e) {
+                                }
+                                catch (Exception e) {
                                     log.error("Falla aqui ->" + item.getSku(), e);
                                 }
 
@@ -543,8 +626,13 @@ public class OrderHelper {
 
                         //cambiamos el estado de los pedidos
                         //log.fatal("Esta comentado lo de completar");
-                        magento.salesOrderCompletar(sessionId, orderInfo.getIncrement_id());
-
+                        try {
+                            //log.fatal("Esta comentado lo de completar");
+                            magento.salesOrderCompletar(sessionId, orderInfo.getIncrement_id());
+                        }
+                        catch (Exception e) {
+                            log.error(e);
+                        }
                         i++;
                         pos++;
 
@@ -563,7 +651,8 @@ public class OrderHelper {
 
                 workbook.write(out);
 
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Se ha producido un error", e);
             }
 
@@ -571,7 +660,8 @@ public class OrderHelper {
 
             magento.endSession(sessionId);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Se ha producido un error", e);
         }
     }
