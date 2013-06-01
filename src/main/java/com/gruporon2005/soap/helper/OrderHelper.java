@@ -162,7 +162,7 @@ public class OrderHelper {
         return productInfo;
     }
 
-    public void exportOrder(OutputStream out, String[] orderIds, SessionBean sessionBean, String handlerPortEndpointAddress) {
+    public void exportOrder(OutputStream out, String[] orderIds, SessionBean sessionBean, String handlerPortEndpointAddress, boolean sandbox) {
         SalesOrderEntity[] orderList;
         CustomerCustomerEntity customerInfo;
         SalesOrderItemEntity[] items;
@@ -179,6 +179,8 @@ public class OrderHelper {
             Mage_Api_Model_Server_V2_HandlerPortType magento = service.getMage_Api_Model_Server_V2_HandlerPort();
 
             String sessionId = magento.login("soap", "test123");
+
+            int numColumnas = 22;
 
             try {
 
@@ -208,7 +210,7 @@ public class OrderHelper {
 
 
                 //ajuste de las columnas al contenido
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 22; i++) {
                     sheet.autoSizeColumn(i);
                 }
 
@@ -330,7 +332,11 @@ public class OrderHelper {
 
 
                 cell = cabecera.createCell(20);
-                cell.setCellValue("Precio");
+                cell.setCellValue("Precio unitario con IVA");
+                cell.setCellStyle(style);
+
+                cell = cabecera.createCell(21);
+                cell.setCellValue("Subtoral con IVA");
                 cell.setCellStyle(style);
 
 
@@ -481,7 +487,8 @@ public class OrderHelper {
 
 
 
-
+                        BigDecimal precioUnitario = BigDecimal.ZERO;
+                        BigDecimal totalFilas = BigDecimal.ZERO;
                         items = orderInfo.getItems();
                         if (items != null) {
                             int j = 0;
@@ -491,11 +498,9 @@ public class OrderHelper {
 
                                 DecimalFormat df = new DecimalFormat("#,##0.00");
 
-                                BigDecimal precio = new BigDecimal(item.getOriginal_price());
-                                BigDecimal impuestos = new BigDecimal(item.getBase_tax_amount());
-                                cell = row.createCell(20);
-                                cell.setCellValue(df.format(precio.add(impuestos)));
-                                cell.setCellStyle(style2);
+                                totalFilas = totalFilas.add(( new BigDecimal(item.getRow_total()) ).add(new BigDecimal(item.getBase_tax_amount())));
+
+
 
                                 if (item.getProduct_type().equals("configurable")) {
                                     try {
@@ -619,20 +624,34 @@ public class OrderHelper {
 
                                 skuCompuesto = "";
 
+                                cell = row.createCell(21);
+                                cell.setCellValue(df.format(totalFilas));
+                                cell.setCellStyle(style2);
+
+                                cell = row.createCell(20);
+                                cell.setCellValue(df.format(totalFilas.divide(new BigDecimal(item.getQty_ordered()))));
+                                cell.setCellStyle(style2);
+
+                                precioUnitario = BigDecimal.ZERO;
+                                totalFilas = BigDecimal.ZERO;
+
 
 
                             }
                         }
 
                         //cambiamos el estado de los pedidos
-                        //log.fatal("Esta comentado lo de completar");
-                        try {
-                            //log.fatal("Esta comentado lo de completar");
-                            magento.salesOrderCompletar(sessionId, orderInfo.getIncrement_id());
+                        if (!sandbox) {
+                            try {
+                                magento.salesOrderCompletar(sessionId, orderInfo.getIncrement_id());
+                            }
+                            catch (Exception e) {
+                                log.error(e);
+                            }
+                        } else {
+                            log.debug("sandbox");
                         }
-                        catch (Exception e) {
-                            log.error(e);
-                        }
+
                         i++;
                         pos++;
 
@@ -640,7 +659,7 @@ public class OrderHelper {
                     }
 
 
-                    for (i = 0; i < 20; i++) {
+                    for (i = 0; i < numColumnas; i++) {
                         sheet.autoSizeColumn(i);
                     }
 
