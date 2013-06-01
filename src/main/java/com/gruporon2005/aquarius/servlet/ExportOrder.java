@@ -57,7 +57,7 @@ public class ExportOrder extends HttpServlet {
 
                 String[] orderIds = request.getParameterValues("order_ids");
                 if (orderIds != null) {
-                    OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean,handlerPortEndpointAddress);
+                    OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean,handlerPortEndpointAddress,false);
                 }
 
 
