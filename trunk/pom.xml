@@ -4,7 +4,7 @@
     <groupId>com.gruporon2005</groupId>
     <artifactId>Aquarius</artifactId>
     <packaging>war</packaging>
-    <version>1.14-SNAPSHOT</version>
+    <version>1.2</version>
     <name>Aquarius JEE5 Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>

@@ -14,6 +14,7 @@ import com.gruporon2005.soap.magento.SalesOrderEntity;
 import com.gruporon2005.soap.magento.SalesOrderItemEntity;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -629,7 +630,15 @@ public class OrderHelper {
                                 cell.setCellStyle(style2);
 
                                 cell = row.createCell(20);
-                                cell.setCellValue(df.format(totalFilas.divide(new BigDecimal(item.getQty_ordered()))));
+                                BigDecimal aux = BigDecimal.ZERO;
+                                BigDecimal aux2 = new BigDecimal(item.getQty_ordered());
+                                try{
+                                    aux = totalFilas.divide(aux2,RoundingMode.HALF_DOWN);
+                                }catch(java.lang.ArithmeticException e){
+                                    log.error("Exception " + "totalfilas: " + totalFilas.toString() +" <>  cantidad"+aux2.toString() ,e);
+                                }
+
+                                cell.setCellValue(df.format(aux));
                                 cell.setCellStyle(style2);
 
                                 precioUnitario = BigDecimal.ZERO;
