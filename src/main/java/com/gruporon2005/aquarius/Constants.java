@@ -13,5 +13,7 @@ public class Constants {
 
     public static final int OFFSET = 0;
     public static final int PAGE_SIZE = 10;
+    public static final String FULLY_COMPLETE_STATUS = "fullyComplete";
+    public static final String PENDING_STATUS = "fullyComplete";
 
 }
