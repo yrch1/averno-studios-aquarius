@@ -7,6 +7,7 @@ package com.gruporon2005.aquarius;
 import com.gruporon2005.aquarius.bean.SessionBean;
 import com.gruporon2005.aquarius.bean.Store;
 import com.gruporon2005.soap.helper.OrderHelper;
+import com.gruporon2005.soap.helper.ProductInfoHelper;
 import com.gruporon2005.soap.magento.AssociativeEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
 import com.gruporon2005.soap.magento.Filters;
@@ -14,6 +15,7 @@ import com.gruporon2005.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
 import com.gruporon2005.soap.magento.MagentoServiceLocator;
 import com.gruporon2005.soap.magento.SalesOrderEntity;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
@@ -24,10 +26,13 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.hibernate.SessionFactory;
 
 import static org.junit.Assert.*;
 
 import org.apache.log4j.Logger;
+import org.hibernate.cfg.Configuration;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -37,8 +42,29 @@ import org.junit.Test;
  */
 public class NewClass {
 
-    public static final String API_URL_YQUDE = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
     private static Logger log = Logger.getLogger(NewClass.class);
+    SessionFactory sessionFactory = null;
+
+    @Before
+    public void setUp() {
+        try {
+            // Create the SessionFactory from hibernate.cfg.xml
+
+            File cfg = new File("src/test/java/com/gruporon2005/aquarius/hibernate.cfg.test.xml");
+
+            System.out.println(cfg.getAbsoluteFile());
+            log.debug(cfg.getAbsolutePath());
+
+            sessionFactory = new Configuration().configure(cfg).buildSessionFactory();
+
+            assertTrue(sessionFactory != null);
+        }
+        catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
     public void test_1() {
         Connection conexion = null;
@@ -79,12 +105,15 @@ public class NewClass {
             conexion = null;  // Make sure we don't close it twice
 
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             log.fatal(e);
-        } catch (NamingException e) {
+        }
+        catch (NamingException e) {
             log.fatal(e);
 
-        } finally {
+        }
+        finally {
             // Always make sure result sets and statements are closed,
             // and the connection is returned to the pool
             /*if (rs != null) {
@@ -106,7 +135,8 @@ public class NewClass {
             if (conexion != null) {
                 try {
                     conexion.close();
-                } catch (SQLException e) {
+                }
+                catch (SQLException e) {
                     log.error(e);
                 }
                 conexion = null;
@@ -127,7 +157,8 @@ public class NewClass {
     @Test
     public void testYQUDE() {
         MagentoServiceLocator service = new MagentoServiceLocator();
-        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(API_URL_YQUDE);
+        String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
         Mage_Api_Model_Server_V2_HandlerPortType magento;
         try {
 
@@ -135,7 +166,8 @@ public class NewClass {
 
             String sessionId = magento.login("soap", "test123");
             assertTrue(sessionId != null);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
@@ -170,7 +202,8 @@ public class NewClass {
                 System.out.println(venta.getOrder_id());
             }
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
@@ -181,7 +214,8 @@ public class NewClass {
     @Test
     public void test3() {
         MagentoServiceLocator service = new MagentoServiceLocator();
-        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(API_URL_YQUDE);
+        String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
         Mage_Api_Model_Server_V2_HandlerPortType magento;
         String ids = "100000289,100000290";
         try {
@@ -198,7 +232,8 @@ public class NewClass {
             filtros.setComplex_filter(cmp);
             SalesOrderEntity[] orderList = magento.salesOrderList(sessionId, filtros);
             assertTrue(orderList.length == 2);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
             assertTrue(false);
         }
@@ -209,9 +244,10 @@ public class NewClass {
     @Test
     public void test5() {
         MagentoServiceLocator service = new MagentoServiceLocator();
-        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(API_URL_YQUDE);
+        String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
         Mage_Api_Model_Server_V2_HandlerPortType magento;
-        String ids = "100031675,100031674";
+        String ids = "100000289,100000290";
         try {
 
             magento = service.getMage_Api_Model_Server_V2_HandlerPort();
@@ -226,94 +262,37 @@ public class NewClass {
             filtros.setComplex_filter(cmp);
             SalesOrderEntity[] orderList = magento.salesOrderList(sessionId, null);
             assertTrue(orderList.length > 2);
-        } catch (Exception ex) {
-            log.error("Exception", ex);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
             assertTrue(false);
         }
 
     }
 
-    @Ignore
     @Test
     public void test6() {
         try {
 
             OutputStream out = new FileOutputStream("prueba.xls");
-            String[] orderIds = new String[]{"400001519", "400001516,400001515,400001514,400001513,400001512,400001510"};
+            String[] orderIds = new String[]{"200000610,200000609,200000602,200000601,200000591"};
             //String[] orderIds = new String[]{"400001510","400001519"};
             String apiUrl = "http://www.gustobycolomer.com/index.php/api/v2_soap/index/";
             SessionBean sessionBean = new SessionBean();
-            sessionBean.setStoreId(22);
-            Store store = new Store(22, "MMX1", "MEMEMUEROPORUNO.com", apiUrl, 4);
+            sessionBean.setStoreId(20);
+            Store store = new Store(20, "GBC", "GUSTO", apiUrl, 2);
             sessionBean.setStoreInfoHash(new HashMap<Integer, Store>());
-            sessionBean.getStoreInfoHash().put(22, store);
+
+
+
+            ProductInfoHelper a = ProductInfoHelper.getInstance();
+            sessionBean.getStoreInfoHash().put(20, store);
+            sessionBean.setProductInfoHash(a.getInfo(sessionFactory.getCurrentSession()));
             OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean, apiUrl, true);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.debug("Exception", e);
 
         }
-    }
-
-    
-    @Test
-    public void test7() {
-        try {
-
-            OutputStream out = new FileOutputStream("prueba.xls");
-            String[] orderIds = new String[]{"100031089", "100031089", "100030631"};
-            SessionBean sessionBean = new SessionBean();
-            sessionBean.setStoreId(22);
-            Store store = new Store(22, "MMX1", "MEMEMUEROPORUNO.com", API_URL_YQUDE, 4);
-            sessionBean.setStoreInfoHash(new HashMap<Integer, Store>());
-            sessionBean.getStoreInfoHash().put(22, store);
-            OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean, API_URL_YQUDE, true);
-        } catch (Exception e) {
-            log.debug("Exception", e);
-
-        }
-    }
-
-    @Ignore
-    @Test
-    public void test8() {
-
-        Filters filtros = new Filters();
-
-        ComplexFilter cmp[] = new ComplexFilter[2];
-        cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", Constants.FULLY_COMPLETE_STATUS));
-        cmp[1] = new ComplexFilter("created_at", new AssociativeEntity("gt", "2013-12-01 00:00:00"));
-        int offset = Constants.OFFSET;
-        int pageSize = Constants.PAGE_SIZE;
-
-        filtros.setComplex_filter(cmp);
-
-        MagentoServiceLocator service = new MagentoServiceLocator();
-        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(API_URL_YQUDE);
-        Mage_Api_Model_Server_V2_HandlerPortType magento;
-
-
-        try {
-
-            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
-
-            String sessionId = magento.login("soap", "test123");
-
-
-            filtros.setComplex_filter(cmp);
-            SalesOrderEntity[] orderList = magento.salesOrderList(sessionId, filtros);
-
-
-            for (int i = 0; i < orderList.length; i++) {
-                SalesOrderEntity item = (SalesOrderEntity) orderList[i];
-
-                log.debug(item.getIncrement_id()+" "+item.getCreated_at());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("Exception", e);
-        }
-
-
     }
 }

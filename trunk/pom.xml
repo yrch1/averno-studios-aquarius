@@ -4,7 +4,7 @@
     <groupId>com.gruporon2005</groupId>
     <artifactId>Aquarius</artifactId>
     <packaging>war</packaging>
-    <version>1.2</version>
+    <version>1.25</version>
     <name>Aquarius JEE5 Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -182,10 +182,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-beta-1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>

@@ -9,5 +9,6 @@
     <property column="owner" name="owner"/>
     <property column="additional" name="additional"/>
     <property column="modification" name="modification" type="timestamp"/>
+    <property column="supplier" name="supplier"/>
   </class>
 </hibernate-mapping>

@@ -306,7 +306,7 @@ public interface Mage_Api_Model_Server_V2_HandlerPortType extends java.rmi.Remot
 
     /**
      * Remove product link
-     */
+         */
     public java.lang.String catalogProductLinkRemove(java.lang.String sessionId, java.lang.String type, java.lang.String product, java.lang.String linkedProduct, java.lang.String productIdentifierType) throws java.rmi.RemoteException;
 
     /**

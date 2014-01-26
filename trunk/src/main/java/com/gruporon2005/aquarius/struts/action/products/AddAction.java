@@ -54,6 +54,7 @@ public class AddAction extends GenericAction {
         String sku = "";
         String additional = "";
         String owner = "";
+        String supplier = "";
         try {
             SessionBean sessionBean = (SessionBean) request.getSession().getAttribute("sessionBean");
             if (sessionBean != null) {
@@ -63,7 +64,8 @@ public class AddAction extends GenericAction {
                     sku = request.getParameter("sku");
                     owner = request.getParameter("owner");
                     additional = request.getParameter("additional");
-                    product = new Product(sku, owner, additional);
+                    supplier = request.getParameter("supplier");
+                    product = new Product(sku, owner, additional,supplier);
 
                     int addResult = ProductInfoHelper.getInstance().add(product);
                     if (addResult == 1) {
