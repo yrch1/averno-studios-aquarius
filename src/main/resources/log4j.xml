@@ -21,7 +21,7 @@
     <appender name="AQUARIUS_SMTP" class="org.apache.log4j.net.SMTPAppender">
         <param name="SMTPHost" value="mail.rontiendas.com" />
         <param name="From" value="davidortega@rontiendas.com" />
-        <param name="To" value="davidortega@rontiendas.com,cristina@gruporon2005.com" />
+        <param name="To" value="cristina@gruporon2005.com" />
         <param name="Subject" value="Error en Aquarius" />
         <param name="BufferSize" value="1" />
         <param name="SMTPUsername" value="davidortega@rontiendas.com" />

@@ -44,7 +44,34 @@ public class ProductInfoHelper {
 
 
         try {
+
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+
+            List<Product> listaProductos = session.createQuery("from Product").list();
+
+            for (Product product : listaProductos) {
+
+                result.put(product.getSku(), product);
+
+            }
+
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
+            log.error(e);
+        }
+
+
+        return result;
+    }
+
+    public HashMap<String, Product> getInfo(Session session) {
+        HashMap<String, Product> result = new HashMap<String, Product>();
+
+
+        try {
             session.beginTransaction();
 
             List<Product> listaProductos = session.createQuery("from Product").list();
@@ -174,8 +201,8 @@ public class ProductInfoHelper {
         try {
             session.beginTransaction();
 
-            String hqlUpdate = "update Product p set p.owner = :owner, p.additional = :additional where p.sku = :sku";
-            result = session.createQuery(hqlUpdate).setString("sku", product.getSku()).setString("owner", product.getOwner()).setString("additional", product.getAdditional()).executeUpdate();
+            String hqlUpdate = "update Product p set p.owner = :owner, p.additional = :additional, p.supplier = :supplier where p.sku = :sku";
+            result = session.createQuery(hqlUpdate).setString("sku", product.getSku()).setString("owner", product.getOwner()).setString("additional", product.getAdditional()).setString("supplier", product.getSupplier()).executeUpdate();
 
             session.getTransaction().commit();
 

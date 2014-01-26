@@ -34,6 +34,7 @@
                 <span class="cell"><a href="?sortField=sku&ascDesc=${ascDesc}&pageSize=${pageSize}">Producto:</a></span>
                 <span class="cell"><a href="?sortField=owner&ascDesc=${ascDesc}&pageSize=${pageSize}">Propietario:</a></span>
                 <span class="cell">Adicional:</span>
+                <span class="cell">Proveedor:</span>
             </div>
 
             <c:forEach var="product" items="${productsInfoList}">
@@ -44,7 +45,8 @@
                     <span class="cell"><c:out value="${product.sku}"/></span>
                     <span class="cell"><c:out value="${product.owner}"/></span>
                     <span class="cell"><c:out value="${product.additional}"/></span>
-                    <span class="cell3"><a href='<c:out value="${url0}" />'>Ver <c:out value="${product.sku}"/></a></span>
+                    <span class="cell"><c:out value="${product.supplier}"/></span>
+                    <span class="cell3"><a href='<c:out value="${url0}" />'>Ver <c:out value="${product.sku}"/></a></span>                    
                 </div>
             </c:forEach>
         </div>

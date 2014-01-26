@@ -181,7 +181,7 @@ public class OrderHelper {
 
             String sessionId = magento.login("soap", "test123");
 
-            int numColumnas = 22;
+            int numColumnas = 23;
 
             try {
 
@@ -211,7 +211,7 @@ public class OrderHelper {
 
 
                 //ajuste de las columnas al contenido
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < numColumnas; i++) {
                     sheet.autoSizeColumn(i);
                 }
 
@@ -311,32 +311,36 @@ public class OrderHelper {
                 cell.setCellStyle(style);
 
                 cell = cabecera.createCell(17);
+                cell.setCellValue("Proveedor");
+                cell.setCellStyle(style);
+
+                cell = cabecera.createCell(18);
                 cell.setCellValue("OBSERVACIONES");
                 cell.setCellStyle(style);
 
                 if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
-                    cell = cabecera.createCell(18);
+                    cell = cabecera.createCell(19);
                     cell.setCellValue("MAGENTO ID");
                     cell.setCellStyle(style);
-                    cell = cabecera.createCell(19);
+                    cell = cabecera.createCell(20);
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
                 } else {
-                    cell = cabecera.createCell(18);
+                    cell = cabecera.createCell(19);
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
-                    cell = cabecera.createCell(19);
-                    cell.setCellValue("Mï¿½todo de pago");
+                    cell = cabecera.createCell(20);
+                    cell.setCellValue("MŽtodo de pago");
                     cell.setCellStyle(style);
                 }
 
 
 
-                cell = cabecera.createCell(20);
+                cell = cabecera.createCell(21);
                 cell.setCellValue("Precio unitario con IVA");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(21);
+                cell = cabecera.createCell(22);
                 cell.setCellValue("Subtoral con IVA");
                 cell.setCellStyle(style);
 
@@ -463,22 +467,22 @@ public class OrderHelper {
 
 
 
-                        cell = row.createCell(17);
+                        cell = row.createCell(18);
                         cell.setCellValue("");
                         cell.setCellStyle(style2);
 
                         if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
-                            cell = row.createCell(18);
+                            cell = row.createCell(19);
                             cell.setCellValue(storeBean.getNemo() + "-" + orderInfo.getIncrement_id());
                             cell.setCellStyle(style2);
-                            cell = row.createCell(19);
+                            cell = row.createCell(20);
                             cell.setCellValue(orderInfo.getCustomer_email());
                             cell.setCellStyle(style2);
                         } else {
-                            cell = row.createCell(18);
+                            cell = row.createCell(19);
                             cell.setCellValue(orderInfo.getCustomer_email());
                             cell.setCellStyle(style2);
-                            cell = row.createCell(19);
+                            cell = row.createCell(20);
                             cell.setCellValue(orderInfo.getPayment().getMethod());
                             cell.setCellStyle(style2);
                         }
@@ -552,7 +556,6 @@ public class OrderHelper {
                                 cell.setCellValue(storeBean.getRequester());
                                 cell.setCellStyle(style2);
 
-
                                 String owner = "ERROR-01";
                                 try {
 
@@ -565,6 +568,13 @@ public class OrderHelper {
 
                                         cell = row.createCell(15);
                                         cell.setCellValue(owner);
+                                        cell.setCellStyle(style2);
+
+
+
+
+                                        cell = row.createCell(17);
+                                        cell.setCellValue(productInfo.getSupplier());
                                         cell.setCellStyle(style2);
 
 
@@ -625,11 +635,11 @@ public class OrderHelper {
 
                                 skuCompuesto = "";
 
-                                cell = row.createCell(21);
+                                cell = row.createCell(22);
                                 cell.setCellValue(df.format(totalFilas));
                                 cell.setCellStyle(style2);
 
-                                cell = row.createCell(20);
+                                cell = row.createCell(21);
                                 BigDecimal aux = BigDecimal.ZERO;
                                 BigDecimal aux2 = new BigDecimal(item.getQty_ordered());
                                 try{

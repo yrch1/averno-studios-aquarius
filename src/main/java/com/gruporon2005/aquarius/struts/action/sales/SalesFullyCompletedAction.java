@@ -77,7 +77,7 @@ public class SalesFullyCompletedAction extends GenericAction {
                 Filters filtros = new Filters();
 
                 ComplexFilter cmp[] = new ComplexFilter[2];
-                cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", "fullyComplete"));
+                cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", Constants.FULLY_COMPLETE_STATUS));
                 cmp[1] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(sessionBean.getStoreInfoHash().get(storeId).getMagentoStoreId())));
 
 

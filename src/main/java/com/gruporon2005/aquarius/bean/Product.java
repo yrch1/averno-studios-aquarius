@@ -8,6 +8,7 @@ public class Product {
     private String additional;
     private int id;
     private Date modification;
+    private String supplier;
 
     /**
      *
@@ -21,10 +22,11 @@ public class Product {
      * @param owner
      * @param additional
      */
-    public Product(String sku, String owner, String additional) {
+    public Product(String sku, String owner, String additional, String supplier) {
         this.sku = sku;
         this.owner = owner;
         this.additional = additional;
+        this.supplier = supplier;
     }
 
     /**
@@ -95,5 +97,19 @@ public class Product {
      */
     public void setModification(Date modification) {
         this.modification = modification;
+    }
+
+    /**
+     * @return the supplier
+     */
+    public String getSupplier() {
+        return supplier;
+    }
+
+    /**
+     * @param supplier the supplier to set
+     */
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }

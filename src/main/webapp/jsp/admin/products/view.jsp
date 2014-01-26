@@ -16,7 +16,9 @@
 
                 <label>Producto: </label><input class="required" type="text" readonly="readonly" name="sku" value="${product.sku}">
                 <label>Propietario: </label><input class="required" type="text" name="owner" value="${product.owner}">
-                <label>Adicional: </label><input class="required" type="text" name="additional" value="${product.additional}" ><br/><br/><br/>
+                <label>Adicional: </label><input class="required" type="text" name="additional" value="${product.additional}" >
+                <label>Proveedor: </label><input type="text" name="supplier" value="${product.supplier}" >
+                <br/><br/><br/>
                 <input type="submit" value="Modificar" class="button float"  />
 
             </form>
@@ -32,6 +34,7 @@
                 <label>Producto: </label><input class="required" type="text" name="sku" value="sku">
                 <label>Propietario: </label><input class="required" type="text" name="owner" value="owner">
                 <label>Adicional: </label><input class="required" type="text" name="additional" value="additional">
+                <label>Proveedor: </label><input type="text" name="supplier" value="supplier">
                 <input type="submit" value="Añadir" class="button"  />
 
             </form>
