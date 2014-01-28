@@ -40,6 +40,7 @@
         <level value="INFO" />
         <appender-ref ref="AQUARIUS_CONSOLE" />
         <appender-ref ref="AQUARIUS_FILE"/>
+        <appender-ref ref="AQUARIUS_SMTP"/>
     </logger>
 
     <!-- ======================= -->

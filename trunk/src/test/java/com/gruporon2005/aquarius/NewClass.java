@@ -275,9 +275,10 @@ public class NewClass {
         try {
 
             OutputStream out = new FileOutputStream("prueba.xls");
-            String[] orderIds = new String[]{"200000610,200000609,200000602,200000601,200000591"};
+            //String[] orderIds = new String[]{"200000610,200000609,200000602,200000601,200000591"};
+            String[] orderIds = new String[]{"400000753"};
             //String[] orderIds = new String[]{"400001510","400001519"};
-            String apiUrl = "http://www.gustobycolomer.com/index.php/api/v2_soap/index/";
+            String apiUrl = "http://www.colomerandsons.com/index.php/api/v2_soap/index/";
             SessionBean sessionBean = new SessionBean();
             sessionBean.setStoreId(20);
             Store store = new Store(20, "GBC", "GUSTO", apiUrl, 2);
