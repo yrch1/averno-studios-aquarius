@@ -7,6 +7,7 @@ import com.gruporon2005.soap.magento.AssociativeEntity;
 import com.gruporon2005.soap.magento.CatalogProductReturnEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
 import com.gruporon2005.soap.magento.CustomerCustomerEntity;
+import com.gruporon2005.soap.magento.DirectoryCountryEntity;
 import com.gruporon2005.soap.magento.Filters;
 import com.gruporon2005.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
 import com.gruporon2005.soap.magento.MagentoServiceLocator;
@@ -21,7 +22,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -38,6 +41,32 @@ import org.apache.poi.ss.usermodel.Workbook;
 public class OrderHelper {
     // El constructor privado no permite que se genere un constructor por defecto
     // (con mismo modificador de acceso que la definicion de la clase)
+
+    public static final int NUMEROPEDIDO_NUM = 0;
+    public static final int FECHA_PEDIDO_NUM = 1;
+    public static final int TIPO_SERVICIO_NUM = 2;
+    public static final int CANTIDAD_NUM = 3;
+    public static final int REEMBOLSO_NUM = 4;
+    public static final int SEGURO_NUM = 5;
+    public static final int NOMBRE_CONSIGNATARIO_NUM = 6;
+    public static final int NIF_NUM = 7;
+    public static final int DIRECCION_CONSIGNATARIO_NUM = 8;
+    public static final int CODIGO_POSTAL_NUM = 9;
+    public static final int POBLACION_NUM = 10;
+    public static final int PROVINCIA_NUM = 11;
+    public static final int TELEFONO_FACTURACION_NUM = 12;
+    public static final int TELEFONO_ENVIO_NUM = 13;
+    public static final int CODIGO_PRODUCTO_NUM = 14;
+    public static final int PROPIETARIO_NUM = 15;
+    public static final int SOLICITANTE_NUM = 16;
+    public static final int OBSERVACIONES_NUM = 17;
+    public static final int MAGENTO_ID_NUM = 18;
+    public static final int CONSTANTE20_NUM = 19;
+    public static final int PRECIO_UNITARIO_NUM = 20;
+    public static final int SUBTOTAL_NUM = 21;
+    public static final int SUPPLIER_NUM = 22;
+    public static final int PAIS_NUM = 23;
+    public static final int CONSTANTE25_NUM = 24;
 
     private OrderHelper() {
     }
@@ -151,7 +180,6 @@ public class OrderHelper {
 
             productInfo = magento.catalogProductInfo(sessionId, id, null, null, null);
 
-
             magento.endSession(sessionId);
 
         }
@@ -168,22 +196,36 @@ public class OrderHelper {
         CustomerCustomerEntity customerInfo;
         SalesOrderItemEntity[] items;
         SalesOrderEntity orderInfo;
+        DirectoryCountryEntity[] countryList;
 
+        Map<String, DirectoryCountryEntity> listaPaises = new HashMap<String, DirectoryCountryEntity>();
 
 
 
 
 
         try {
+
+
+
             MagentoServiceLocator service = new MagentoServiceLocator();
             service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
             Mage_Api_Model_Server_V2_HandlerPortType magento = service.getMage_Api_Model_Server_V2_HandlerPort();
 
             String sessionId = magento.login("soap", "test123");
 
-            int numColumnas = 23;
+            int numColumnas = 25;
 
             try {
+
+                countryList = magento.directoryCountryList(sessionId);
+
+
+
+                for (int i = 0; i < countryList.length; i++) {
+                    DirectoryCountryEntity item = countryList[i];
+                    listaPaises.put(item.getCountry_id(), item);
+                }
 
 
                 Store storeBean = sessionBean.getStoreInfoHash().get(sessionBean.getStoreId());
@@ -241,107 +283,115 @@ public class OrderHelper {
 
                 Row cabecera = sheet.createRow(0);
 
-                Cell cell = cabecera.createCell(0);
+                Cell cell = cabecera.createCell(NUMEROPEDIDO_NUM);
                 cell.setCellValue("NUMEROPEDIDO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(1);
+                cell = cabecera.createCell(OrderHelper.FECHA_PEDIDO_NUM);
                 cell.setCellValue("FECHA PEDIDO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(2);
+                cell = cabecera.createCell(OrderHelper.TIPO_SERVICIO_NUM);
                 cell.setCellValue("TIPO SERVICIO");
                 cell.setCellStyle(style);
 
 
-                cell = cabecera.createCell(3);
+                cell = cabecera.createCell(OrderHelper.CANTIDAD_NUM);
                 cell.setCellValue("CANTIDAD");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(4);
+                cell = cabecera.createCell(OrderHelper.REEMBOLSO_NUM);
                 cell.setCellValue("REEMBOLSO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(5);
+                cell = cabecera.createCell(OrderHelper.SEGURO_NUM);
                 cell.setCellValue("SEGURO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(6);
+                cell = cabecera.createCell(OrderHelper.NOMBRE_CONSIGNATARIO_NUM);
                 cell.setCellValue("NOMBRE CONSIGNATARIO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(7);
+                cell = cabecera.createCell(OrderHelper.NIF_NUM);
                 cell.setCellValue("NIF");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(8);
+                cell = cabecera.createCell(OrderHelper.DIRECCION_CONSIGNATARIO_NUM);
                 cell.setCellValue("DIRECCION CONSIGNATARIO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(9);
+                cell = cabecera.createCell(OrderHelper.CODIGO_POSTAL_NUM);
                 cell.setCellValue("CODIGO POSTAL");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(10);
+                cell = cabecera.createCell(OrderHelper.POBLACION_NUM);
                 cell.setCellValue("POBLACION");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(11);
+                cell = cabecera.createCell(OrderHelper.PROVINCIA_NUM);
                 cell.setCellValue("PROVINCIA");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(12);
+                cell = cabecera.createCell(OrderHelper.TELEFONO_FACTURACION_NUM);
                 cell.setCellValue("TELEFONO Facturacion");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(13);
+                cell = cabecera.createCell(OrderHelper.TELEFONO_ENVIO_NUM);
                 cell.setCellValue("TELEFONO Envio");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(14);
+                cell = cabecera.createCell(OrderHelper.CODIGO_PRODUCTO_NUM);
                 cell.setCellValue("CODIGO PRODUCTO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(15);
+                cell = cabecera.createCell(OrderHelper.PROPIETARIO_NUM);
                 cell.setCellValue("PROPIETARIO");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(16);
+                cell = cabecera.createCell(OrderHelper.SOLICITANTE_NUM);
                 cell.setCellValue("SOLICITANTE");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(17);
+                cell = cabecera.createCell(SUPPLIER_NUM);
                 cell.setCellValue("Proveedor");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(18);
+                cell = cabecera.createCell(OrderHelper.OBSERVACIONES_NUM);
                 cell.setCellValue("OBSERVACIONES");
                 cell.setCellStyle(style);
 
                 if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
-                    cell = cabecera.createCell(19);
+                    cell = cabecera.createCell(OrderHelper.MAGENTO_ID_NUM);
                     cell.setCellValue("MAGENTO ID");
                     cell.setCellStyle(style);
-                    cell = cabecera.createCell(20);
+                    cell = cabecera.createCell(OrderHelper.CONSTANTE20_NUM);
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
                 } else {
-                    cell = cabecera.createCell(19);
+                    cell = cabecera.createCell(OrderHelper.MAGENTO_ID_NUM);
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
-                    cell = cabecera.createCell(20);
+                    cell = cabecera.createCell(OrderHelper.CONSTANTE20_NUM);
                     cell.setCellValue("MŽtodo de pago");
                     cell.setCellStyle(style);
                 }
 
 
 
-                cell = cabecera.createCell(21);
+                cell = cabecera.createCell(OrderHelper.PRECIO_UNITARIO_NUM);
                 cell.setCellValue("Precio unitario con IVA");
                 cell.setCellStyle(style);
 
-                cell = cabecera.createCell(22);
-                cell.setCellValue("Subtoral con IVA");
+                cell = cabecera.createCell(OrderHelper.SUBTOTAL_NUM);
+                cell.setCellValue("Subtotal con IVA");
+                cell.setCellStyle(style);
+
+                cell = cabecera.createCell(OrderHelper.PAIS_NUM);
+                cell.setCellValue("Pa’s");
+                cell.setCellStyle(style);
+
+                cell = cabecera.createCell(OrderHelper.CONSTANTE25_NUM);
+                cell.setCellValue("Extra");
                 cell.setCellStyle(style);
 
 
@@ -400,13 +450,13 @@ public class OrderHelper {
                         Date fecha1 = formatoDeFecha.parse(order.getCreated_at());
                         SimpleDateFormat formatoDeFecha2 = new SimpleDateFormat("dd/MM/yyyy");
 
-                        cell = row.createCell(1);
+                        cell = row.createCell(OrderHelper.FECHA_PEDIDO_NUM);
                         cell.setCellValue(formatoDeFecha2.format(fecha1));
                         cell.setCellStyle(style2);
 
 
 
-                        cell = row.createCell(4);
+                        cell = row.createCell(OrderHelper.REEMBOLSO_NUM);
                         if (orderInfo.getPayment().getMethod().equals("cashondelivery")) {
                             cell.setCellValue(Float.valueOf(orderInfo.getPayment().getAmount_ordered()));
                             style2.setDataFormat(format.getFormat("0.00"));
@@ -419,11 +469,11 @@ public class OrderHelper {
 
 
 
-                        cell = row.createCell(5);
+                        cell = row.createCell(OrderHelper.SEGURO_NUM);
                         cell.setCellValue("");
                         cell.setCellStyle(style2);
 
-                        cell = row.createCell(7);
+                        cell = row.createCell(OrderHelper.NIF_NUM);
                         cell.setCellValue(dni);
                         cell.setCellStyle(style2);
 
@@ -431,35 +481,39 @@ public class OrderHelper {
 
                         if (orderInfo.getShipping_address() != null) {
 
-                            cell = row.createCell(6);
+                            cell = row.createCell(OrderHelper.NOMBRE_CONSIGNATARIO_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getFirstname() + " " + orderInfo.getShipping_address().getLastname());
                             cell.setCellStyle(style2);
 
-                            cell = row.createCell(8);
+                            cell = row.createCell(OrderHelper.DIRECCION_CONSIGNATARIO_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getStreet() + " " + orderInfo.getShipping_address().getCompany());
                             cell.setCellStyle(style2);
 
-                            cell = row.createCell(9);
+                            cell = row.createCell(OrderHelper.CODIGO_POSTAL_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getPostcode());
                             cell.setCellStyle(style2);
 
 
-                            cell = row.createCell(10);
+                            cell = row.createCell(OrderHelper.POBLACION_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getCity());
                             cell.setCellStyle(style2);
 
-                            cell = row.createCell(11);
+                            cell = row.createCell(OrderHelper.PROVINCIA_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getRegion());
                             cell.setCellStyle(style2);
 
-                            cell = row.createCell(13);
+                            cell = row.createCell(OrderHelper.TELEFONO_ENVIO_NUM);
                             cell.setCellValue(orderInfo.getShipping_address().getTelephone());
+                            cell.setCellStyle(style2);
+
+                            cell = row.createCell(OrderHelper.PAIS_NUM);
+                            cell.setCellValue(listaPaises.get(orderInfo.getShipping_address().getCountry_id()).getName().trim());
                             cell.setCellStyle(style2);
 
                         }
 
                         if (orderInfo.getBilling_address() != null) {
-                            cell = row.createCell(12);
+                            cell = row.createCell(OrderHelper.TELEFONO_FACTURACION_NUM);
                             cell.setCellValue(orderInfo.getBilling_address().getTelephone());
                             cell.setCellStyle(style2);
                         }
@@ -467,22 +521,22 @@ public class OrderHelper {
 
 
 
-                        cell = row.createCell(18);
+                        cell = row.createCell(OrderHelper.OBSERVACIONES_NUM);
                         cell.setCellValue("");
                         cell.setCellStyle(style2);
 
                         if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
-                            cell = row.createCell(19);
+                            cell = row.createCell(OrderHelper.MAGENTO_ID_NUM);
                             cell.setCellValue(storeBean.getNemo() + "-" + orderInfo.getIncrement_id());
                             cell.setCellStyle(style2);
-                            cell = row.createCell(20);
+                            cell = row.createCell(OrderHelper.CONSTANTE20_NUM);
                             cell.setCellValue(orderInfo.getCustomer_email());
                             cell.setCellStyle(style2);
                         } else {
-                            cell = row.createCell(19);
+                            cell = row.createCell(OrderHelper.MAGENTO_ID_NUM);
                             cell.setCellValue(orderInfo.getCustomer_email());
                             cell.setCellStyle(style2);
-                            cell = row.createCell(20);
+                            cell = row.createCell(OrderHelper.CONSTANTE20_NUM);
                             cell.setCellValue(orderInfo.getPayment().getMethod());
                             cell.setCellStyle(style2);
                         }
@@ -509,6 +563,7 @@ public class OrderHelper {
 
                                 if (item.getProduct_type().equals("configurable")) {
                                     try {
+
                                         CatalogProductReturnEntity a = getProductInfo(item.getProduct_id(), handlerPortEndpointAddress);
                                         if (a != null) {
                                             skuCompuesto = a.getSku();
@@ -532,27 +587,27 @@ public class OrderHelper {
                                     row = sheet.createRow(i + 1);
                                 }
 
-                                cell = row.createCell(0);
+                                cell = row.createCell(OrderHelper.NUMEROPEDIDO_NUM);
                                 cell.setCellValue(String.format(storeBean.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
                                 cell.setCellStyle(style2);
 
-                                cell = row.createCell(2);
+                                cell = row.createCell(OrderHelper.TIPO_SERVICIO_NUM);
                                 cell.setCellValue("3");
                                 cell.setCellStyle(style2);
 
-                                cell = row.createCell(3);
+                                cell = row.createCell(OrderHelper.CANTIDAD_NUM);
                                 cell.setCellValue(Float.valueOf(item.getQty_ordered()));
                                 style3.setDataFormat(format.getFormat("0"));
                                 cell.setCellStyle(style3);
 
-                                cell = row.createCell(14);
+                                cell = row.createCell(OrderHelper.CODIGO_PRODUCTO_NUM);
                                 cell.setCellValue(skuCompuesto);
                                 cell.setCellStyle(style2);
 
 
 
 
-                                cell = row.createCell(16);
+                                cell = row.createCell(OrderHelper.SOLICITANTE_NUM);
                                 cell.setCellValue(storeBean.getRequester());
                                 cell.setCellStyle(style2);
 
@@ -566,14 +621,14 @@ public class OrderHelper {
                                             owner = "ERROR-02";
                                         }
 
-                                        cell = row.createCell(15);
+                                        cell = row.createCell(OrderHelper.PROPIETARIO_NUM);
                                         cell.setCellValue(owner);
                                         cell.setCellStyle(style2);
 
 
 
 
-                                        cell = row.createCell(17);
+                                        cell = row.createCell(OrderHelper.SUPPLIER_NUM);
                                         cell.setCellValue(productInfo.getSupplier());
                                         cell.setCellStyle(style2);
 
@@ -589,30 +644,30 @@ public class OrderHelper {
                                                 Product productInfoAdditional = (Product) sessionBean.getProductInfoHash().get(productInfo.getAdditional());
                                                 owner = ( productInfo.getOwner() );
 
-                                                cell = row.createCell(0);
+                                                cell = row.createCell(OrderHelper.NUMEROPEDIDO_NUM);
                                                 cell.setCellValue(String.format(storeBean.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
                                                 cell.setCellStyle(style2);
 
-                                                cell = row.createCell(2);
+                                                cell = row.createCell(OrderHelper.TIPO_SERVICIO_NUM);
                                                 cell.setCellValue("3");
                                                 cell.setCellStyle(style2);
 
-                                                cell = row.createCell(3);
+                                                cell = row.createCell(OrderHelper.CANTIDAD_NUM);
                                                 cell.setCellValue(Float.valueOf(item.getQty_ordered()));
                                                 style3.setDataFormat(format.getFormat("0"));
                                                 cell.setCellStyle(style3);
 
-                                                cell = row.createCell(14);
+                                                cell = row.createCell(OrderHelper.CODIGO_PRODUCTO_NUM);
                                                 cell.setCellValue(productInfoAdditional.getSku());
                                                 cell.setCellStyle(style2);
 
 
 
-                                                cell = row.createCell(15);
+                                                cell = row.createCell(OrderHelper.PROPIETARIO_NUM);
                                                 cell.setCellValue(productInfoAdditional.getOwner());
                                                 cell.setCellStyle(style2);
 
-                                                cell = row.createCell(16);
+                                                cell = row.createCell(OrderHelper.SOLICITANTE_NUM);
                                                 cell.setCellValue(storeBean.getRequester());
                                                 cell.setCellStyle(style2);
 
@@ -635,17 +690,18 @@ public class OrderHelper {
 
                                 skuCompuesto = "";
 
-                                cell = row.createCell(22);
+                                cell = row.createCell(OrderHelper.SUBTOTAL_NUM);
                                 cell.setCellValue(df.format(totalFilas));
                                 cell.setCellStyle(style2);
 
-                                cell = row.createCell(21);
+                                cell = row.createCell(OrderHelper.PRECIO_UNITARIO_NUM);
                                 BigDecimal aux = BigDecimal.ZERO;
                                 BigDecimal aux2 = new BigDecimal(item.getQty_ordered());
-                                try{
-                                    aux = totalFilas.divide(aux2,RoundingMode.HALF_DOWN);
-                                }catch(java.lang.ArithmeticException e){
-                                    log.error("Exception " + "totalfilas: " + totalFilas.toString() +" <>  cantidad"+aux2.toString() ,e);
+                                try {
+                                    aux = totalFilas.divide(aux2, RoundingMode.HALF_DOWN);
+                                }
+                                catch (java.lang.ArithmeticException e) {
+                                    log.error("Exception " + "totalfilas: " + totalFilas.toString() + " <>  cantidad" + aux2.toString(), e);
                                 }
 
                                 cell.setCellValue(df.format(aux));
