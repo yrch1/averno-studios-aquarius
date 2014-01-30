@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
     <appender name="AQUARIUS_CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <param name="Target" value="System.out"/>
@@ -34,13 +35,17 @@
     </appender>
 
 
+<logger name="com.gruporon2005" additivity="false" >
+        <level value="DEBUG" />
+        <appender-ref ref="AQUARIUS_CONSOLE" />
+        <appender-ref ref="AQUARIUS_FILE"/>
+    </logger>
 
     <!-- Configuracion del AQUARIUS -->
     <logger name="com.gruporon2005.AQUARIUS" additivity="false" >
-        <level value="INFO" />
+        <level value="DEBUG" />
         <appender-ref ref="AQUARIUS_CONSOLE" />
         <appender-ref ref="AQUARIUS_FILE"/>
-        <appender-ref ref="AQUARIUS_SMTP"/>
     </logger>
 
     <!-- ======================= -->

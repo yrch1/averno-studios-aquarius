@@ -62,10 +62,11 @@
 
             <c:if test="${not empty orderList}">
                 <jsp:include page="/jsp/helper/pagination.jsp" >
-                    <jsp:param name="url" value="/actions/admin/sales.do" />
+                    <jsp:param name="url" value="/actions/admin/sales/completed.do" />
                     <jsp:param name="numPages" value="${numPages}" />
                     <jsp:param name="storeId" value="${sessionBean.storeId}" />
-                    <jsp:param name="pageSize" value="${pageSize}" />
+                    <jsp:param name="pageSize" value="${pageSize}" />                    
+                    <jsp:param name="dateFrom" value="${dateFrom}" />
                 </jsp:include>
             </c:if>
 

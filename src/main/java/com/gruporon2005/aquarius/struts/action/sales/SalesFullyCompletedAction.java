@@ -7,6 +7,7 @@ package com.gruporon2005.aquarius.struts.action.sales;
 import com.gruporon2005.aquarius.Constants;
 import com.gruporon2005.aquarius.bean.SessionBean;
 import com.gruporon2005.aquarius.struts.action.GenericAction;
+import com.gruporon2005.aquarius.util.Utilities;
 import com.gruporon2005.soap.helper.OrderHelper;
 import com.gruporon2005.soap.magento.AssociativeEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
@@ -49,6 +50,7 @@ public class SalesFullyCompletedAction extends GenericAction {
             int offset = Constants.OFFSET;
             int pageSize = Constants.PAGE_SIZE;
             int storeId = -1;
+            int dateFrom = Constants.DEFAULT_DATE_FROM;
 
 
             SessionBean sessionBean = (SessionBean) request.getSession().getAttribute("sessionBean");
@@ -65,6 +67,16 @@ public class SalesFullyCompletedAction extends GenericAction {
                 sessionBean.setStoreId(storeId);
 
             }
+            if (request.getParameter("offset") != null && !request.getParameter("offset").equals("")) {
+                offset = Integer.valueOf(request.getParameter("offset"));
+            }
+
+            if (request.getParameter("pageSize") != null && !request.getParameter("pageSize").equals("")) {
+                pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            }
+            if (request.getParameter(Constants.DATE_FROM_NAME) != null && !request.getParameter(Constants.DATE_FROM_NAME).equals("")) {
+                dateFrom = Integer.valueOf(request.getParameter(Constants.DATE_FROM_NAME));
+            }
 
             OrderHelper helperOrder1 = OrderHelper.getInstance();
 
@@ -76,22 +88,15 @@ public class SalesFullyCompletedAction extends GenericAction {
 
                 Filters filtros = new Filters();
 
-                ComplexFilter cmp[] = new ComplexFilter[2];
+                ComplexFilter cmp[] = new ComplexFilter[3];
                 cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", Constants.FULLY_COMPLETE_STATUS));
                 cmp[1] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(sessionBean.getStoreInfoHash().get(storeId).getMagentoStoreId())));
+                cmp[2] = new ComplexFilter("created_at", new AssociativeEntity("gt",Utilities.getInstance().getFilterDateFrom(dateFrom)));
 
 
                 filtros.setComplex_filter(cmp);
 
                 handlerPortEndpointAddress = sessionBean.getStoreInfoHash().get(storeId).getApiUrl();
-
-                if (request.getParameter("offset") != null && !request.getParameter("offset").equals("")) {
-                    offset = Integer.valueOf(request.getParameter("offset"));
-                }
-
-                if (request.getParameter("pageSize") != null && !request.getParameter("pageSize").equals("")) {
-                    pageSize = Integer.valueOf(request.getParameter("pageSize"));
-                }
 
 
                 int[] orderListSize = new int[1];
@@ -107,6 +112,7 @@ public class SalesFullyCompletedAction extends GenericAction {
                 request.setAttribute("orderList", orderList);
                 request.setAttribute("currentPage", (offset / pageSize) + 1);
                 request.setAttribute("pageSize", pageSize);
+                request.setAttribute(Constants.DATE_FROM_NAME, dateFrom);
             }
 
             result = mapping.findForward("success");

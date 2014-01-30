@@ -4,21 +4,25 @@
  */
 package com.gruporon2005.aquarius.struts.action.sales;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 import com.gruporon2005.aquarius.Constants;
 import com.gruporon2005.aquarius.bean.SessionBean;
 import com.gruporon2005.aquarius.struts.action.GenericAction;
+import com.gruporon2005.aquarius.util.Utilities;
 import com.gruporon2005.soap.helper.OrderHelper;
 import com.gruporon2005.soap.magento.AssociativeEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
 import com.gruporon2005.soap.magento.Filters;
 import com.gruporon2005.soap.magento.SalesOrderEntity;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  *
@@ -48,6 +52,7 @@ public class SalesCompletedAction extends GenericAction {
             int offset = Constants.OFFSET;
             int pageSize = Constants.PAGE_SIZE;
             int storeId = -1;
+            int dateFrom = Constants.DEFAULT_DATE_FROM;
 
 
             SessionBean sessionBean = (SessionBean) request.getSession().getAttribute("sessionBean");
@@ -64,6 +69,16 @@ public class SalesCompletedAction extends GenericAction {
                 sessionBean.setStoreId(storeId);
 
             }
+            if (request.getParameter("offset") != null && !request.getParameter("offset").equals("")) {
+                offset = Integer.valueOf(request.getParameter("offset"));
+            }
+
+            if (request.getParameter("pageSize") != null && !request.getParameter("pageSize").equals("")) {
+                pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            }
+            if (request.getParameter(Constants.DATE_FROM_NAME) != null && !request.getParameter(Constants.DATE_FROM_NAME).equals("")) {
+                dateFrom = Integer.valueOf(request.getParameter(Constants.DATE_FROM_NAME));
+            }
 
             OrderHelper helperOrder1 = OrderHelper.getInstance();
 
@@ -73,11 +88,11 @@ public class SalesCompletedAction extends GenericAction {
             if (storeId > 0) {
 
                 Filters filtros = new Filters();
-
                 
                  ComplexFilter cmp[] = new ComplexFilter[2];
                 cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", "complete"));
                 cmp[1] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(sessionBean.getStoreInfoHash().get(storeId).getMagentoStoreId())));
+                cmp[2] = new ComplexFilter("created_at", new AssociativeEntity("gt", Utilities.getInstance().getFilterDateFrom(dateFrom)));
 
                /*
                 ComplexFilter cmp[] = new ComplexFilter[1];
@@ -91,14 +106,6 @@ public class SalesCompletedAction extends GenericAction {
 
                 handlerPortEndpointAddress = sessionBean.getStoreInfoHash().get(storeId).getApiUrl();
 
-                if (request.getParameter("offset") != null && !request.getParameter("offset").equals("")) {
-                    offset = Integer.valueOf(request.getParameter("offset"));
-                }
-
-                if (request.getParameter("pageSize") != null && !request.getParameter("pageSize").equals("")) {
-                    pageSize = Integer.valueOf(request.getParameter("pageSize"));
-                }
-
 
                 int[] orderListSize = new int[1];
 
@@ -111,6 +118,7 @@ public class SalesCompletedAction extends GenericAction {
                 request.setAttribute("orderList", orderList);
                 request.setAttribute("currentPage", (offset / pageSize) + 1);
                 request.setAttribute("pageSize", pageSize);
+                request.setAttribute(Constants.DATE_FROM_NAME, dateFrom);
             }
 
             result = mapping.findForward("success");
