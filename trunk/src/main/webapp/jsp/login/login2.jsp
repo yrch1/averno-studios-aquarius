@@ -10,7 +10,7 @@
     </head>
     <body>
         <jsp:include page="/jsp/defecto/header.jsp" />
-        <form method="POST" action="j_security_check">
+        <form method="post" action="j_security_check">
             User Name : <input type="text" name="j_username" />
             Password  : <input type="password" name="j_password" />
             <input type="submit" />

@@ -9,6 +9,8 @@ import com.gruporon2005.aquarius.bean.Store;
 import com.gruporon2005.soap.helper.OrderHelper;
 import com.gruporon2005.soap.helper.ProductInfoHelper;
 import com.gruporon2005.soap.magento.AssociativeEntity;
+import com.gruporon2005.soap.magento.CatalogProductEntity;
+import com.gruporon2005.soap.magento.CatalogProductReturnEntity;
 import com.gruporon2005.soap.magento.ComplexFilter;
 import com.gruporon2005.soap.magento.Filters;
 import com.gruporon2005.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
@@ -18,8 +20,10 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -168,13 +172,12 @@ public class NewClass {
             assertTrue(sessionId != null);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Exception",ex);
             assertTrue(false);
         }
 
     }
 
-    @Ignore
     @Test
     public void testECONO() {
         MagentoServiceLocator service = new MagentoServiceLocator();
@@ -204,7 +207,7 @@ public class NewClass {
 
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -234,7 +237,7 @@ public class NewClass {
             assertTrue(orderList.length == 2);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -264,12 +267,13 @@ public class NewClass {
             assertTrue(orderList.length > 2);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Exception",ex);
             assertTrue(false);
         }
 
     }
 
+    @Ignore
     @Test
     public void test6() {
         try {
@@ -296,4 +300,198 @@ public class NewClass {
 
         }
     }
+    
+    @Test
+    public void testCatalogProductList() {
+        MagentoServiceLocator service = new MagentoServiceLocator();
+        //String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        String handlerPortEndpointAddress = "http://www.colomerandsons.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+        Mage_Api_Model_Server_V2_HandlerPortType magento = null;
+        String sessionId = "";
+		try {
+
+            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            sessionId  = magento.login("soap", "test123");
+            
+
+			
+            	 CatalogProductEntity[] result = magento.catalogProductList(sessionId, null, null);
+                assertTrue(result!=null && result.length>0);
+          
+        }
+        catch (Exception ex) {
+            log.error("Exception",ex);
+            assertTrue(false);
+        }finally{
+        	if(sessionId != null && sessionId.length()>0){
+        		try {
+					magento.endSession(sessionId);
+				} catch (RemoteException e) {
+					log.error("Exception",e);
+				}
+        	}
+        }
+
+    }
+    
+    @Ignore
+    @Test
+    public void testCatalogProductInfoYQUDE() {
+        MagentoServiceLocator service = new MagentoServiceLocator();
+        String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+        Mage_Api_Model_Server_V2_HandlerPortType magento = null;
+        String sessionId = "";
+		try {
+
+            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            sessionId  = magento.login("soap", "test123");
+            
+            List<String> listaItem = new ArrayList<String>();
+            listaItem.add("ROLIO");
+            listaItem.add("SPACESCO");
+			for(String item : listaItem ){
+            	CatalogProductReturnEntity result = magento.catalogProductInfo(sessionId, item, null, null, null);
+                assertTrue(result!=null);
+            }
+            
+            
+            
+             
+        }
+        catch (Exception ex) {
+            log.error("Exception",ex);
+            assertTrue(false);
+        }finally{
+        	if(sessionId != null && sessionId.length()>0){
+        		try {
+					magento.endSession(sessionId);
+				} catch (RemoteException e) {
+					log.error("Exception",e);
+				}
+        	}
+        }
+
+    }
+    
+    @Test
+    public void testCatalogProductInfoCOLOMER() {
+        MagentoServiceLocator service = new MagentoServiceLocator();
+        String handlerPortEndpointAddress = "http://www.colomerandsons.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+        Mage_Api_Model_Server_V2_HandlerPortType magento = null;
+        String sessionId = "";
+		try {
+
+            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            sessionId  = magento.login("soap", "test123");
+            
+            List<String> listaItem = new ArrayList<String>();
+            listaItem.add("AIRFORCES");
+			for(String item : listaItem ){
+            	CatalogProductReturnEntity result = magento.catalogProductInfo(sessionId, item, "4", null, null);
+                assertTrue(result!=null);
+            }
+        }
+        catch (Exception ex) {
+            log.error("Exception",ex);
+            assertTrue(false);
+        }finally{
+        	if(sessionId != null && sessionId.length()>0){
+        		try {
+					magento.endSession(sessionId);
+				} catch (RemoteException e) {
+					log.error("Exception",e);
+				}
+        	}
+        }
+
+    }
+    
+    @Ignore
+    @Test
+    public void testCatalogProductInfoSLANKET() {
+        MagentoServiceLocator service = new MagentoServiceLocator();
+        String handlerPortEndpointAddress = "http://www.slanket.es/api/v2_soap?wsdl=1";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+        Mage_Api_Model_Server_V2_HandlerPortType magento = null;
+        String sessionId = "";
+		try {
+
+            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            sessionId  = magento.login("soap", "test123");
+            
+            CatalogProductReturnEntity result = magento.catalogProductInfo(sessionId, "CANGRA", null, null, null);
+            assertTrue(result!=null);
+            result = magento.catalogProductInfo(sessionId, "HOTDOG", null, null, null);
+            assertTrue(result!=null);
+        }
+        catch (Exception ex) {
+            log.error("Exception",ex);
+            assertTrue(false);
+        }finally{
+        	if(sessionId != null && sessionId.length()>0){
+        		try {
+					magento.endSession(sessionId);
+				} catch (RemoteException e) {
+					log.error("Exception",e);
+				}
+        	}
+        }
+
+    }
+    
+    
+    @Test
+    public void testSalesOrderList() {
+        MagentoServiceLocator service = new MagentoServiceLocator();
+        String handlerPortEndpointAddress = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
+        service.setMage_Api_Model_Server_V2_HandlerPortEndpointAddress(handlerPortEndpointAddress);
+        Mage_Api_Model_Server_V2_HandlerPortType magento = null;
+        String sessionId = "";
+		try {
+
+            magento = service.getMage_Api_Model_Server_V2_HandlerPort();
+
+            sessionId  = magento.login("soap", "test123");
+            
+            ComplexFilter cmp[] = new ComplexFilter[1];
+            cmp[0] = new ComplexFilter("created_at", new AssociativeEntity("gt", "2014-01-01 00:00:00"));
+            
+            Filters filtros = new Filters();
+            filtros.setComplex_filter(cmp);
+            
+            
+           // SalesOrderEntity[]  result = magento.salesOrderList(sessionId, null);
+            SalesOrderEntity[]  result2 = magento.salesOrderList(sessionId, filtros);
+            //log.debug("El numero de pedidos es : " + result.length);
+            //assertTrue(result!=null);
+            assertTrue(result2!=null);
+            log.debug("El numero de pedidos ahora es : " + result2.length);
+            //assertTrue(result.length>result2.length);
+        }
+        catch (Exception ex) {
+            log.error("Exception",ex);
+            assertTrue(false);
+        }finally{
+        	if(sessionId != null && sessionId.length()>0){
+        		try {
+					magento.endSession(sessionId);
+				} catch (RemoteException e) {
+					log.error("Exception",e);
+				}
+        	}
+        }
+
+    }
+    
+    
+    
+    
+    
 }
