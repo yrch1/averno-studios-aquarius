@@ -101,7 +101,7 @@ public class ProductsAction extends GenericAction {
 
 
         } catch (Exception e) {
-            log.error(e);
+            log.error("Exception",e);
             result = mapping.findForward("error");
         }
         return result;

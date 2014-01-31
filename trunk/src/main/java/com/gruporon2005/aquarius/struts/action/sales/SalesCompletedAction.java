@@ -89,7 +89,7 @@ public class SalesCompletedAction extends GenericAction {
 
                 Filters filtros = new Filters();
                 
-                 ComplexFilter cmp[] = new ComplexFilter[2];
+                 ComplexFilter cmp[] = new ComplexFilter[3];
                 cmp[0] = new ComplexFilter("status", new AssociativeEntity("eq", "complete"));
                 cmp[1] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(sessionBean.getStoreInfoHash().get(storeId).getMagentoStoreId())));
                 cmp[2] = new ComplexFilter("created_at", new AssociativeEntity("gt", Utilities.getInstance().getFilterDateFrom(dateFrom)));
@@ -125,7 +125,7 @@ public class SalesCompletedAction extends GenericAction {
 
 
         } catch (Exception e) {
-            log.fatal(e);
+            log.fatal("Exception",e);
         }
         return result;
     }

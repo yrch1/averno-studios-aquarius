@@ -62,8 +62,8 @@ public class OrderHelper {
     public static final int OBSERVACIONES_NUM = 17;
     public static final int MAGENTO_ID_NUM = 18;
     public static final int CONSTANTE20_NUM = 19;
-    public static final int PRECIO_UNITARIO_NUM = 20;
-    public static final int SUBTOTAL_NUM = 21;
+    public static final int PRECIO_UNITARIO_NUM = 21;
+    public static final int SUBTOTAL_NUM = 20;
     public static final int SUPPLIER_NUM = 22;
     public static final int PAIS_NUM = 23;
     public static final int CONSTANTE25_NUM = 24;
@@ -372,7 +372,7 @@ public class OrderHelper {
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
                     cell = cabecera.createCell(OrderHelper.CONSTANTE20_NUM);
-                    cell.setCellValue("MŽtodo de pago");
+                    cell.setCellValue("Mï¿½todo de pago");
                     cell.setCellStyle(style);
                 }
 
@@ -387,7 +387,7 @@ public class OrderHelper {
                 cell.setCellStyle(style);
 
                 cell = cabecera.createCell(OrderHelper.PAIS_NUM);
-                cell.setCellValue("Pa’s");
+                cell.setCellValue("Paï¿½s");
                 cell.setCellStyle(style);
 
                 cell = cabecera.createCell(OrderHelper.CONSTANTE25_NUM);
@@ -721,7 +721,7 @@ public class OrderHelper {
                                 magento.salesOrderCompletar(sessionId, orderInfo.getIncrement_id());
                             }
                             catch (Exception e) {
-                                log.error(e);
+                                log.error("Exception",e);
                             }
                         } else {
                             log.debug("sandbox");

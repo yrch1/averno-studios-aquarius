@@ -119,7 +119,7 @@ public class SalesFullyCompletedAction extends GenericAction {
 
 
         } catch (Exception e) {
-            log.fatal(e);
+            log.fatal("Exception",e);
         }
         return result;
     }

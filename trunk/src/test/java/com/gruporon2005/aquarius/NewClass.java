@@ -111,10 +111,10 @@ public class NewClass {
 
         }
         catch (SQLException e) {
-            log.fatal(e);
+            log.fatal("Exception",e);
         }
         catch (NamingException e) {
-            log.fatal(e);
+            log.fatal("Exception",e);
 
         }
         finally {
@@ -141,7 +141,7 @@ public class NewClass {
                     conexion.close();
                 }
                 catch (SQLException e) {
-                    log.error(e);
+                    log.error("Exception",e);
                 }
                 conexion = null;
             }
@@ -273,16 +273,20 @@ public class NewClass {
 
     }
 
-    @Ignore
+    
     @Test
     public void test6() {
         try {
 
             OutputStream out = new FileOutputStream("prueba.xls");
             //String[] orderIds = new String[]{"200000610,200000609,200000602,200000601,200000591"};
-            String[] orderIds = new String[]{"400000753"};
+            //String[] orderIds = new String[]{"400000753"};
+            String[] orderIds = new String[]{"100031870","100031868","100031865","100000289","100000290"};
             //String[] orderIds = new String[]{"400001510","400001519"};
-            String apiUrl = "http://www.colomerandsons.com/index.php/api/v2_soap/index/";
+             
+            
+             
+            String apiUrl = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
             SessionBean sessionBean = new SessionBean();
             sessionBean.setStoreId(20);
             Store store = new Store(20, "GBC", "GUSTO", apiUrl, 2);
@@ -301,6 +305,7 @@ public class NewClass {
         }
     }
     
+    @Ignore
     @Test
     public void testCatalogProductList() {
         MagentoServiceLocator service = new MagentoServiceLocator();
@@ -377,6 +382,7 @@ public class NewClass {
 
     }
     
+    @Ignore
     @Test
     public void testCatalogProductInfoCOLOMER() {
         MagentoServiceLocator service = new MagentoServiceLocator();
@@ -446,7 +452,7 @@ public class NewClass {
 
     }
     
-    
+    @Ignore
     @Test
     public void testSalesOrderList() {
         MagentoServiceLocator service = new MagentoServiceLocator();
