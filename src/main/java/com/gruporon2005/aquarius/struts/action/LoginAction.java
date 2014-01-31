@@ -59,7 +59,7 @@ public class LoginAction extends org.apache.struts.action.Action {
         int leido = input.read();
         while (leido != -1) {
             cadAux = Integer.toHexString(leido);
-            if (cadAux.length() < 2) { //Hay que añadir un 0
+            if (cadAux.length() < 2) { //Hay que aï¿½adir un 0
                 resultado += "0";
                 if (cadAux.length() == 0) {
                     ult0 = true;
@@ -159,7 +159,7 @@ public class LoginAction extends org.apache.struts.action.Action {
                         rs.close();
                     }
                     catch (SQLException e) {
-                        log.error(e);
+                        log.error("Exception",e);
                     }
                     rs = null;
                 }
@@ -168,7 +168,7 @@ public class LoginAction extends org.apache.struts.action.Action {
                         stmt.close();
                     }
                     catch (SQLException e) {
-                        log.error(e);
+                        log.error("Exception",e);
                     }
                     stmt = null;
                 }
@@ -177,7 +177,7 @@ public class LoginAction extends org.apache.struts.action.Action {
                         conexion.close();
                     }
                     catch (SQLException e) {
-                        log.error(e);
+                        log.error("Exception",e);
                     }
                     conexion = null;
                 }
@@ -188,7 +188,7 @@ public class LoginAction extends org.apache.struts.action.Action {
 
         }
         catch (Exception e) {
-            log.error(e);
+            log.error("Exception",e);
             result = mapping.findForward(FAILURE);
         }
         return result;

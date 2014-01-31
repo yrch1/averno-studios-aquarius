@@ -47,7 +47,7 @@ public class StoreInfoHelper {
             session.getTransaction().commit();
 
         } catch (Exception e) {
-            log.error(e);
+            log.error("Exception",e);
         }
 
 

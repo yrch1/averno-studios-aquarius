@@ -62,7 +62,7 @@ public class ViewAction extends GenericAction {
 
             result = mapping.findForward("success");
         } catch (Exception e) {
-            log.fatal(e);
+            log.fatal("Exception",e);
         }
 
         return result;

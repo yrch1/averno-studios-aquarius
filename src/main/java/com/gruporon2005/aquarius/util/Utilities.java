@@ -40,6 +40,7 @@ public class Utilities {
 		}
 		return result;
 	}
+
 	/**
 	 * Obtiene la fecha en formato para los filtros de magento
 	 * 
@@ -78,11 +79,13 @@ public class Utilities {
 	}
 
 	public String getFilterDateFrom(int dateFrom) {
+		String result = "2014-01-01 00:00:00";
 		Calendar rightNow = Calendar.getInstance();
-		switch (dateFrom){
+		try {
+			switch (dateFrom) {
 			case 1:
-				rightNow.add(Calendar.DATE, -1);
 			default:
+				rightNow.add(Calendar.DATE, -1);
 				break;
 			case 2:
 				rightNow.add(Calendar.DATE, -7);
@@ -93,11 +96,13 @@ public class Utilities {
 			case 4:
 				rightNow.add(Calendar.YEAR, -1);
 				break;
+			}
+
+			result = getFilterDate(rightNow.getTime());
+		} catch (Exception e) {
+			log.error("Exception", e);
 		}
-		
-		String result = getFilterDate(rightNow.getTime());
 		return result;
-				
-		
+
 	}
 }

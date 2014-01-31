@@ -84,7 +84,7 @@ public class UpdateAction extends GenericAction {
                 result = mapping.findForward("error");
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("Exception",e);
         }
 
         return result;

@@ -60,7 +60,7 @@ public class ProductInfoHelper {
 
         } catch (Exception e) {
             HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
 
 
@@ -86,7 +86,7 @@ public class ProductInfoHelper {
 
         } catch (Exception e) {
             HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
 
 
@@ -121,7 +121,7 @@ public class ProductInfoHelper {
             session.getTransaction().commit();
 
         } catch (Exception e) {
-            log.error(e);
+            log.error("Exception",e);
         }
 
         return result;
@@ -137,7 +137,7 @@ public class ProductInfoHelper {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
         return result;
     }
@@ -161,7 +161,7 @@ public class ProductInfoHelper {
             result = 1;
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
         return result;
 
@@ -184,7 +184,7 @@ public class ProductInfoHelper {
 
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
         return result;
 
@@ -208,7 +208,7 @@ public class ProductInfoHelper {
 
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
         return result;
     }
@@ -268,7 +268,7 @@ public class ProductInfoHelper {
 
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.error(e);
+            log.error("Exception",e);
         }
 
         return result;
