@@ -144,7 +144,7 @@
     .button2{ cursor: pointer;padding: 0px; float: left; margin:0 20px 0 0;}
 
     .button:hover{ background: #E6852D; color:#fff; border: none; cursor: pointer}
-    .top{ background: #ffffea; padding: 10px; margin: 0; width: 970px; height: 20px;}
+    .top{ background: #ffffea; padding: 10px; margin: 0; width: 970px; height: 40px;}
         .top2{ background: #ffffea; padding: 10px; margin: 0; width: 970px; height: 150px;}
 
     .storeSelect{float:left}

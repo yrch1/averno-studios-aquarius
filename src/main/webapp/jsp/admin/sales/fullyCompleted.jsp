@@ -9,9 +9,9 @@
             <input type="button" value="Volver atrás" class="button2" onclick="window.history.back();" />
 
             <jsp:include page="/jsp/helper/storeSelector.jsp" />
-            <c:if test="${not empty orderList}">
+            
                 <jsp:include page="/jsp/helper/pageSize.jsp" />
-            </c:if>
+            
         </div>
         <br class="clear" />
 
