@@ -23,17 +23,17 @@ root {
 }
 
 .usuario{
-    background-image:url('/Aquarius/images/botusuario.jpg');
+    background-image:url('/aquarius/images/botusuario.jpg');
     width:201px;
     height:80px;
 }
 .pedido{
-    background-image:url('/Aquarius/images/botpedido.jpg');
+    background-image:url('/aquarius/images/botpedido.jpg');
     width:201px;
     height:80px;
 }
 .producto{
-    background-image:url('/Aquarius/images/botproducto.jpg');
+    background-image:url('/aquarius/images/botproducto.jpg');
     width:201px;
     height:80px;
 }
@@ -53,13 +53,13 @@ root {
     height: 44px;
 }
 .menu_home ul li.usuario a:hover {
-    background:url('/Aquarius/images/botusuario.jpg') no-repeat 0 -80px;
+    background:url('/aquarius/images/botusuario.jpg') no-repeat 0 -80px;
 }
 .menu_home ul li.pedido a:hover {
-    background:url('/Aquarius/images/botpedido.jpg') no-repeat 0 -80px;
+    background:url('/aquarius/images/botpedido.jpg') no-repeat 0 -80px;
 }
 .menu_home ul li.producto a:hover {
-    background:url('/Aquarius/images/botproducto.jpg') no-repeat 0 -80px;
+    background:url('/aquarius/images/botproducto.jpg') no-repeat 0 -80px;
 }
 .menu_home ul li a span {
     display:none;

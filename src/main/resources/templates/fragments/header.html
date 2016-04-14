@@ -1,12 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
   <head>
   </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="container">
-	    <p class="navbar-text">CRUD Operation using  Spring Boot + Spring Data JPA + ThymeLeaf + HikariCP + MySQL</p>
-	  </div>
-	</nav>
+<!-- Inicio header -->
+<c:url value="/actions/admin/sales.do" var="url0"></c:url>
+<c:url value="/actions/admin/sales/completed.do" var="url1"></c:url>
+<c:url value="/actions/admin/sales/fullyCompleted.do" var="url2"></c:url>
+<c:url value="/inicio.do" var="url3"></c:url>
+<c:url value="/actions/admin/products.do" var="url4"></c:url>
+<div class="head">
+    <div class="logo">&nbsp;</div>
+
+    <div class="nav">
+        <div class="menu">
+            <ul>
+                <li><a id="menuHome" th:href="@{/}"><b>HOME</b></a></li>
+                <li><a id="menuPedidos" th:href="@{/sales}"><b>PEDIDOS</b></a>
+                    <ul>
+                        <li><a th:href="@{/sales/completed}"><b>COMPLETOS</b></a></li>
+                        <li><a th:href="@{/sales/fullyCompleted}"><b>TRAMITADOS</b></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="menuProductos" th:href="@{/products}"><b>PRODUCTOS</b></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- Fin header -->
 </body>
 </html>
