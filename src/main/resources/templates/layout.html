@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
-    <!--  Each token will be replaced by their respective titles in the resulting page. -->
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">FrameworkOnly</title>
     <link th:replace="/fragments/style"/>
   </head>
   <body>
