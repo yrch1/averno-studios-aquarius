@@ -1,7 +1,7 @@
 package es.avernostudios.aquarius.soap.helper;
 
-import es.avernostudios.aquarius.aquarius.bean.Product;
-import es.avernostudios.aquarius.aquarius.util.HibernateUtil;
+import es.avernostudios.aquarius.bean.Product;
+import es.avernostudios.aquarius.util.HibernateUtil;
 import es.avernostudios.aquarius.soap.magento.CatalogInventoryStockItemEntity;
 import es.avernostudios.aquarius.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
 import es.avernostudios.aquarius.soap.magento.MagentoServiceLocator;

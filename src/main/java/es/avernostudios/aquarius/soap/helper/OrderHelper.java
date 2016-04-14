@@ -1,8 +1,8 @@
 package es.avernostudios.aquarius.soap.helper;
 
-import es.avernostudios.aquarius.aquarius.bean.Product;
-import es.avernostudios.aquarius.aquarius.bean.SessionBean;
-import es.avernostudios.aquarius.aquarius.bean.Store;
+import es.avernostudios.aquarius.bean.Product;
+import es.avernostudios.aquarius.bean.SessionBean;
+import es.avernostudios.aquarius.bean.Store;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
 import es.avernostudios.aquarius.soap.magento.CatalogProductReturnEntity;
 import es.avernostudios.aquarius.soap.magento.ComplexFilter;

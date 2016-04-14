@@ -1,6 +1,6 @@
 package es.avernostudios.aquarius.soap.helper;
 
-import es.avernostudios.aquarius.aquarius.bean.Store;
+import es.avernostudios.aquarius.bean.Store;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;

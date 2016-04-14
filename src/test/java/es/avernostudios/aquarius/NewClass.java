@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.avernostudios.aquarius.aquarius;
+package es.avernostudios.aquarius;
 
-import es.avernostudios.aquarius.aquarius.bean.SessionBean;
-import es.avernostudios.aquarius.aquarius.bean.Store;
+import es.avernostudios.aquarius.bean.SessionBean;
+import es.avernostudios.aquarius.bean.Store;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
 import es.avernostudios.aquarius.soap.helper.ProductInfoHelper;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
