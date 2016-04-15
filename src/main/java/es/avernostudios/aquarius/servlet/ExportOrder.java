@@ -51,7 +51,7 @@ public class ExportOrder extends HttpServlet {
                 response.addHeader("Content-Disposition", "attachment;filename=" +storeBean.getNemo()+"-"+ df.format(ahora.getTime()) + ".xls");
                 request.getParameter("order_ids");
 
-                String handlerPortEndpointAddress = storeBean.getApiUrl();
+                String handlerPortEndpointAddress = storeBean.getEndpoint();
 
 
 

@@ -1,6 +1,7 @@
 package es.avernostudios.aquarius.soap.helper;
 
 import es.avernostudios.aquarius.bean.Product;
+import es.avernostudios.aquarius.jpa.repositories.ProductRepository;
 import es.avernostudios.aquarius.util.HibernateUtil;
 import es.avernostudios.aquarius.soap.magento.CatalogInventoryStockItemEntity;
 import es.avernostudios.aquarius.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
@@ -16,6 +17,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
@@ -25,41 +27,21 @@ public class ProductInfoHelper {
 
     private static Logger log = Logger.getLogger(ProductInfoHelper.class);
 
-    // El constructor privado no permite que se genere un constructor por defecto
-    // (con mismo modificador de acceso que la definicion de la clase)
-    private ProductInfoHelper() {
-    }
+    private ProductInfoHelper(){}
 
-    public static ProductInfoHelper getInstance() {
-        return SingletonHolder.instance;
-    }
+    @Autowired
+    static ProductRepository productRepository;
 
-    private static class SingletonHolder {
-
-        private final static ProductInfoHelper instance = new ProductInfoHelper();
-    }
-
-    public HashMap<String, Product> getInfo() {
-        HashMap<String, Product> result = new HashMap<String, Product>();
+    public static HashMap<String, Product> getInfo() {
+        HashMap<String, Product> result = new HashMap<>();
 
 
         try {
-
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-
-            List<Product> listaProductos = session.createQuery("from Product").list();
-
+            Iterable<Product> listaProductos = productRepository.findAll();
             for (Product product : listaProductos) {
-
                 result.put(product.getSku(), product);
-
             }
-
-            session.getTransaction().commit();
-
         } catch (Exception e) {
-            HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
             log.error("Exception",e);
         }
 
@@ -67,7 +49,7 @@ public class ProductInfoHelper {
         return result;
     }
 
-    public HashMap<String, Product> getInfo(Session session) {
+    public static HashMap<String, Product> getInfo(Session session) {
         HashMap<String, Product> result = new HashMap<String, Product>();
 
 
@@ -101,7 +83,7 @@ public class ProductInfoHelper {
      * @param productsInfoListSize
      * @return
      */
-    public List<Product> getInfoList(int offset, int pageSize, int[] productsInfoListSize, String fieldSort, String ascDesc) {
+    public static List<Product> getInfoList(int offset, int pageSize, int[] productsInfoListSize, String fieldSort, String ascDesc) {
         List<Product> result = new ArrayList<Product>();
 
         try {
@@ -127,7 +109,7 @@ public class ProductInfoHelper {
         return result;
     }
 
-    public Product getProductInfo(String sku) {
+    public static Product getProductInfo(String sku) {
         Product result = null;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -148,7 +130,7 @@ public class ProductInfoHelper {
      * @param product
      * @return
      */
-    public int add(Product product) {
+    public static int add(Product product) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -173,7 +155,7 @@ public class ProductInfoHelper {
      * @param sku
      * @return
      */
-    public int delete(String sku) {
+    public static int delete(String sku) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -195,7 +177,7 @@ public class ProductInfoHelper {
      * @param product
      * @return
      */
-    public int update(Product product) {
+    public static int update(Product product) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -219,7 +201,7 @@ public class ProductInfoHelper {
      * @param handlerPortEndpointAddress
      * @return
      */
-    public List<CatalogInventoryStockItemEntity> getStockList(String[] productsIds, String handlerPortEndpointAddress) {
+    public static List<CatalogInventoryStockItemEntity> getStockList(String[] productsIds, String handlerPortEndpointAddress) {
 
 
         List<CatalogInventoryStockItemEntity> result = null;
@@ -248,7 +230,7 @@ public class ProductInfoHelper {
      * @param sku
      * @return
      */
-    public List<Product> searchProduct(String sku) {
+    public static List<Product> searchProduct(String sku) {
         List<Product> result = null;
 
 

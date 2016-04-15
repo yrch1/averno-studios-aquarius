@@ -294,9 +294,8 @@ public class NewClass {
 
 
 
-            ProductInfoHelper a = ProductInfoHelper.getInstance();
             sessionBean.getStoreInfoHash().put(20, store);
-            sessionBean.setProductInfoHash(a.getInfo(sessionFactory.getCurrentSession()));
+            sessionBean.setProductInfoHash(ProductInfoHelper.getInfo(sessionFactory.getCurrentSession()));
             OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean, apiUrl, true);
         }
         catch (Exception e) {

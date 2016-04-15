@@ -2,52 +2,33 @@ package es.avernostudios.aquarius.soap.helper;
 
 import es.avernostudios.aquarius.bean.Store;
 import java.util.HashMap;
-import java.util.List;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
+import es.avernostudios.aquarius.jpa.repositories.StoreRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
  * @author yrch
  */
+@Slf4j
 public class StoreInfoHelper {
 
-    private static Logger log = Logger.getLogger(StoreInfoHelper.class);
+    @Autowired
+    static StoreRepository storeRepository;
 
-    // El constructor privado no permite que se genere un constructor por defecto
-    // (con mismo modificador de acceso que la definicion de la clase)
-    private StoreInfoHelper() {
-    }
-
-    public static StoreInfoHelper getInstance() {
-        return SingletonHolder.instance;
-    }
-
-    private static class SingletonHolder {
-
-        private final static StoreInfoHelper instance = new StoreInfoHelper();
-    }
-
-    public HashMap<Integer, Store> getInfo(Session session) {
-        HashMap<Integer, Store> result = new HashMap<Integer, Store>();
+    public static HashMap<Integer, Store> getInfo() {
+        HashMap<Integer, Store> result = new HashMap<>();
 
         try {
 
-            session.beginTransaction();
-
-
-
-            List<Store> intermedia = session.createQuery("from Store").list();
+            Iterable<Store> intermedia =storeRepository.findAll();
             for (Store store : intermedia) {
                 result.put(store.getId(), store);
             }
 
 
-
-            session.getTransaction().commit();
-
         } catch (Exception e) {
-            log.error("Exception",e);
+            LOGGER.error("Exception",e);
         }
 
 

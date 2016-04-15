@@ -10,7 +10,7 @@
 # Generation Time: 2013-05-24 11:13:15 +0000
 # ************************************************************
 
-use Aquarius;
+use aquarius;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,26 +21,26 @@ use Aquarius;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table PRODUCT_INFO
+# Dump of table product
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `PRODUCT_INFO`;
+DROP TABLE IF EXISTS `product`;
 
-CREATE TABLE `PRODUCT_INFO` (
-  `product_info_id` int(11) NOT NULL auto_increment,
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL auto_increment,
   `sku` varchar(25) NOT NULL,
   `owner` varchar(255) default NULL,
   `additional` varchar(255) NOT NULL default '-',
   `modification` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`product_info_id`),
+  PRIMARY KEY  (`product_id`),
   UNIQUE KEY `SKU_UNIQUE` (`sku`),
-  KEY `product_info_PK` (`product_info_id`)
+  KEY `product_PK` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1164 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `PRODUCT_INFO` WRITE;
-/*!40000 ALTER TABLE `PRODUCT_INFO` DISABLE KEYS */;
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
 
-INSERT INTO `PRODUCT_INFO` (`product_info_id`, `sku`, `owner`, `additional`, `modification`)
+INSERT INTO `product` (`product_id`, `sku`, `owner`, `additional`, `modification`)
 VALUES
 	(1,'ABIKEP','YOQUIERO','-','2010-05-18 10:19:56'),
 	(2,'ANASA','YOQUIERO','-','2010-05-18 10:19:56'),
@@ -1129,32 +1129,32 @@ VALUES
 	(1162,'MARMITALI','GRON','-','2013-05-20 13:08:39'),
 	(1163,'BOLSOFASHION','YOQUIERO','-','2013-05-20 13:09:02');
 
-/*!40000 ALTER TABLE `PRODUCT_INFO` ENABLE KEYS */;
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table STORE_INFO
+# Dump of table store
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `STORE_INFO`;
+DROP TABLE IF EXISTS `store`;
 
-CREATE TABLE `STORE_INFO` (
-  `store_info_id` int(10) NOT NULL auto_increment,
+CREATE TABLE `store` (
+  `store_id` int(10) NOT NULL auto_increment,
   `id` int(11) NOT NULL,
   `nemo` varchar(255) NOT NULL,
   `requester` varchar(255) NOT NULL,
-  `apiUrl` varchar(255) NOT NULL,
+  `endpoint` varchar(255) NOT NULL,
   `magento_store_id` int(5) NOT NULL,
   `modification` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`store_info_id`),
+  PRIMARY KEY  (`store_id`),
   KEY `nemo_IDX` (`nemo`),
   KEY `ID_IDX` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `STORE_INFO` WRITE;
-/*!40000 ALTER TABLE `STORE_INFO` DISABLE KEYS */;
+LOCK TABLES `store` WRITE;
+/*!40000 ALTER TABLE `store` DISABLE KEYS */;
 
-INSERT INTO `STORE_INFO` (`store_info_id`, `id`, `nemo`, `requester`, `apiUrl`, `magento_store_id`, `modification`)
+INSERT INTO `store` (`store_id`, `id`, `nemo`, `requester`, `endpoint`, `magento_store_id`, `modification`)
 VALUES
 	(1,1,'ABC','ABC','http://tienda.abc.es/index.php/api/v2_soap/index/',2,'2010-12-02 23:02:46'),
 	(2,2,'LDW','LIBERTAD DIGITAL','http://www.latiendadelibertaddigital.com/index.php/api/v2_soap/index/',2,'2010-05-11 12:12:40'),
@@ -1180,32 +1180,32 @@ VALUES
 	(24,24,'CSE','COLOMER_ENG','http://www.colomerandsons.com/index.php/api/v2_soap/index/',5,'2012-12-17 18:03:13'),
 	(25,25,'COPE','COPE','http://www.tiendacope.com/index.php/api/v2_soap/index/',1,'2012-12-17 18:02:44');
 
-/*!40000 ALTER TABLE `STORE_INFO` ENABLE KEYS */;
+/*!40000 ALTER TABLE `store` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table USERS
+# Dump of table user
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `USERS`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `USERS` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(50) character set latin1 NOT NULL,
   `password` varchar(255) character set latin1 NOT NULL,
   `modification` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
-  KEY `USERS_NAME_FK` (`name`)
+  KEY `user_NAME_FK` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `USERS` WRITE;
-/*!40000 ALTER TABLE `USERS` DISABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `USERS` (`id`, `name`, `password`, `modification`)
+INSERT INTO `user` (`id`, `name`, `password`, `modification`)
 VALUES
 	(1,'cristina','ae2b1fca515949e5d54fb22b8ed95575','2010-05-25 20:18:58');
 
-/*!40000 ALTER TABLE `USERS` ENABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

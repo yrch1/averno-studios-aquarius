@@ -9,6 +9,7 @@ import es.avernostudios.aquarius.soap.magento.Filters;
 import es.avernostudios.aquarius.soap.magento.SalesOrderEntity;
 import es.avernostudios.aquarius.util.Utilities;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,9 @@ import java.util.List;
 @RequestMapping("/sales")
 public class SalesController {
 
+    @Autowired
+    SessionBean sessionBean;
+
     @RequestMapping
     public ModelAndView index(@RequestParam(value = "storeId", required = false,defaultValue = "-1") int storeId
                           , @RequestParam(value = "offset", required = false,defaultValue = "-1") int offset
@@ -37,8 +41,8 @@ public class SalesController {
 
         result.setViewName("sales/index");
 
-        SessionBean sessionBean = (SessionBean) new SessionBean();//request.getSession().getAttribute("sessionBean");
 
+        sessionBean.init();
 
         if (sessionBean != null) {
             storeId = sessionBean.getStoreId();
@@ -57,7 +61,7 @@ public class SalesController {
 
         if (storeId > 0) {
 
-            handlerPortEndpointAddress = sessionBean.getStoreInfoHash().get(storeId).getApiUrl();
+            handlerPortEndpointAddress = sessionBean.getStoreInfoHash().get(storeId).getEndpoint();
 
 
             int[] orderListSize = new int[1];

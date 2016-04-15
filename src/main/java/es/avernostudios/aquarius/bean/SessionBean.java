@@ -5,103 +5,46 @@
 
 package es.avernostudios.aquarius.bean;
 
+import java.io.Serializable;
 import java.util.HashMap;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
+
+import es.avernostudios.aquarius.soap.helper.ProductInfoHelper;
+import es.avernostudios.aquarius.soap.helper.StoreInfoHelper;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author yrch
  */
-public class SessionBean {
+@Component
+@Scope(proxyMode= ScopedProxyMode.TARGET_CLASS, value="session")
+@Data
+@Slf4j
+public class SessionBean implements Serializable{
 
-    private static Logger log = Logger.getLogger(SessionBean.class);
 
     private HashMap productInfoHash;
     private HashMap<Integer, Store> storeInfoHash;
     private boolean userLoggedIn = false;
-
-    private int storeId = -1;
+    private int storeId = -2;
 
 
     public SessionBean() {
-
-    }
-
-    /**
-     * @return the productInfoHash
-     */
-    public HashMap getProductInfoHash() {
-        return productInfoHash;
-    }
-
-    /**
-     * @param productInfoHash the productInfoHash to set
-     */
-    public void setProductInfoHash(HashMap productInfoHash) {
-        this.productInfoHash = productInfoHash;
-    }
-
-    /**
-     * @return the storeInfoHash
-     */
-    public HashMap<Integer, Store> getStoreInfoHash() {
-        return storeInfoHash;
-    }
-
-    /**
-     * @param storeInfoHash the storeInfoHash to set
-     */
-    public void setStoreInfoHash(HashMap<Integer, Store> storeInfoHash) {
-        this.storeInfoHash = storeInfoHash;
-    }
-
-    /**
-     * @return the storeId
-     */
-    public int getStoreId() {
-        return storeId;
-    }
-
-    /**
-     * @param storeId the storeId to set
-     */
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-   /**
-     * @return the userLoggedIn
-     */
-    public boolean isUserLoggedIn() {
-        return userLoggedIn;
-    }
-
-    /**
-     * @param userLoggedIn the userLoggedIn to set
-     */
-    public void setUserLoggedIn(boolean userLoggedIn) {
-        this.userLoggedIn = userLoggedIn;
-    }
-
-    private Session buildSession() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            return new Configuration().configure().buildSessionFactory().getCurrentSession();
-        }
-        catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            log.fatal("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
-    public Session getSession() {
-        return buildSession();
+        init();
     }
 
 
+    public void init() {
 
+        //Iniciamos el hash que contiene los informacion de los productos
+        setProductInfoHash(ProductInfoHelper.getInfo());
 
+        //Iniciamos el hash que contiene los informacion de los productos
+
+        setStoreInfoHash(StoreInfoHelper.getInfo());
+    }
 }
