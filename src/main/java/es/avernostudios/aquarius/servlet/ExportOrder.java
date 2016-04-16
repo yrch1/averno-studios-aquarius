@@ -4,8 +4,9 @@
  */
 package es.avernostudios.aquarius.servlet;
 
-import es.avernostudios.aquarius.bean.SessionBean;
+import es.avernostudios.aquarius.Constants;
 import es.avernostudios.aquarius.bean.Store;
+import es.avernostudios.aquarius.jpa.repositories.StoreRepository;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -24,6 +26,8 @@ import org.apache.log4j.Logger;
 public class ExportOrder extends HttpServlet {
 
     private static Logger log = Logger.getLogger(ExportOrder.class);
+    @Autowired
+    StoreRepository storeRepository;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,23 +45,22 @@ public class ExportOrder extends HttpServlet {
             Calendar ahora = Calendar.getInstance();
             DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
-            SessionBean sessionBean = (SessionBean) request.getSession().getAttribute("sessionBean");
+            int storeId = (int) request.getSession().getAttribute(Constants.STORE_ID);
+            Store workingStore = storeRepository.findOne(storeId);
+            if (workingStore != null) {
 
-            if (sessionBean != null) {
-
-                Store storeBean = sessionBean.getStoreInfoHash().get(sessionBean.getStoreId());
 
                 response.setHeader("Refresh", "0");
-                response.addHeader("Content-Disposition", "attachment;filename=" +storeBean.getNemo()+"-"+ df.format(ahora.getTime()) + ".xls");
+                response.addHeader("Content-Disposition", "attachment;filename=" + workingStore.getNemo() + "-" + df.format(ahora.getTime()) + ".xls");
                 request.getParameter("order_ids");
 
-                String handlerPortEndpointAddress = storeBean.getEndpoint();
+                String handlerPortEndpointAddress = workingStore.getEndpoint();
 
 
 
                 String[] orderIds = request.getParameterValues("order_ids");
                 if (orderIds != null) {
-                    OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean,handlerPortEndpointAddress,false);
+                    OrderHelper.getInstance().exportOrder(out, orderIds,workingStore,handlerPortEndpointAddress,false);
                 }
 
 

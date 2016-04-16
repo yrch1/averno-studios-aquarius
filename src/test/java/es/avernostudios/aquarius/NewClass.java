@@ -4,7 +4,6 @@
  */
 package es.avernostudios.aquarius;
 
-import es.avernostudios.aquarius.bean.SessionBean;
 import es.avernostudios.aquarius.bean.Store;
 import es.avernostudios.aquarius.jpa.repositories.ProductRepository;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
@@ -38,7 +37,6 @@ import org.hibernate.SessionFactory;
 
 import static org.junit.Assert.*;
 
-import org.apache.log4j.Logger;
 import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -130,7 +128,7 @@ public class NewClass {
             LOGGER.error("Exception", e);
         }
         catch (NamingException e) {
-            LOGGER.error("Exception",e);
+            LOGGER.error("Exception", e);
 
         }
         finally {
@@ -302,17 +300,9 @@ public class NewClass {
              
             
              
-            String apiUrl = "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/";
-            SessionBean sessionBean = new SessionBean();
-            sessionBean.setStoreId(20);
-            Store store = new Store(20, "GBC", "GUSTO", apiUrl, 2);
-            sessionBean.setStoreInfoHash(new HashMap<Integer, Store>());
 
-
-
-            sessionBean.getStoreInfoHash().put(20, store);
-            sessionBean.setProductInfoHash(ProductInfoHelper.getInstance().getInfo(productRepository.findAll()));
-            OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean, apiUrl, true);
+            Store workingStore = new Store(20, "GBC", "GUSTO", "http://www.yoquierounodeesos.com/index.php/api/v2_soap/index/", 2);
+            OrderHelper.getInstance().exportOrder(out, orderIds, workingStore, workingStore.getEndpoint(), true);
         }
         catch (Exception e) {
             LOGGER.debug("Exception", e);

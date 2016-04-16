@@ -17,5 +17,6 @@ public class Constants {
     public static final String PENDING_STATUS = "pending";
 	public static final String DATE_FROM_NAME = "dateFrom";
 	public static final int DEFAULT_DATE_FROM = 1;
+    public static final String STORE_ID = "storeId";
 
 }

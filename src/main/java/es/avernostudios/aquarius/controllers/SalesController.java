@@ -1,7 +1,7 @@
 package es.avernostudios.aquarius.controllers;
 
 import es.avernostudios.aquarius.Constants;
-import es.avernostudios.aquarius.bean.SessionBean;
+import es.avernostudios.aquarius.bean.Store;
 import es.avernostudios.aquarius.jpa.repositories.StoreRepository;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
@@ -12,11 +12,11 @@ import es.avernostudios.aquarius.util.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,9 +28,6 @@ import java.util.List;
 public class SalesController {
 
     @Autowired
-    SessionBean sessionBean;
-
-    @Autowired
     StoreRepository storeRepository;
 
     @RequestMapping
@@ -38,7 +35,7 @@ public class SalesController {
                           , @RequestParam(value = "offset", required = false,defaultValue = "-1") int offset
             , @RequestParam(value = "pageSize", required = false,defaultValue = Constants.PAGE_SIZE+"") int pageSize
             , @RequestParam(value = "dateFrom", required = false,defaultValue = Constants.DEFAULT_DATE_FROM+"") int dateFrom
-            ,Model model) {
+            ,HttpSession session) {
 
         LOGGER.debug("/sales/");
 
@@ -47,25 +44,20 @@ public class SalesController {
 
         result.setViewName("sales/index");
 
-
-        if(sessionBean.isNew()){
-            sessionBean.init();
+        if (storeId != -1||session.getAttribute(Constants.STORE_ID)==null) {
+            session.setAttribute(Constants.STORE_ID,storeId);
         }
 
-
-        if (storeId != -1) {
-            sessionBean.setStoreId(storeId);
-        }
-
-        storeId = sessionBean.getStoreId();
+        storeId = (int) session.getAttribute(Constants.STORE_ID);
 
         OrderHelper helperOrder1 = OrderHelper.getInstance();
 
-        String handlerPortEndpointAddress = "";
+        String handlerPortEndpointAddress;
 
         if (storeId > 0) {
 
-            handlerPortEndpointAddress = sessionBean.getStoreInfoHash().get(storeId).getEndpoint();
+            Store workingStore = storeRepository.findOne(storeId);
+            handlerPortEndpointAddress =workingStore.getEndpoint() ;
 
 
             int[] orderListSize = new int[1];
@@ -76,7 +68,7 @@ public class SalesController {
             Filters filtros = new Filters();
 
             ComplexFilter cmp[] = new ComplexFilter[2];
-            cmp[0] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(sessionBean.getStoreInfoHash().get(storeId).getMagentoStoreId())));
+            cmp[0] = new ComplexFilter("store_id", new AssociativeEntity("eq", String.valueOf(workingStore.getMagentoStoreId())));
             cmp[1] = new ComplexFilter("created_at", new AssociativeEntity("gt", Utilities.getInstance().getFilterDateFrom(dateFrom)));
 
             filtros.setComplex_filter(cmp);

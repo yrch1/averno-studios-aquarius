@@ -1,8 +1,8 @@
 package es.avernostudios.aquarius.soap.helper;
 
 import es.avernostudios.aquarius.bean.Product;
-import es.avernostudios.aquarius.bean.SessionBean;
 import es.avernostudios.aquarius.bean.Store;
+import es.avernostudios.aquarius.jpa.repositories.ProductRepository;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
 import es.avernostudios.aquarius.soap.magento.CatalogProductReturnEntity;
 import es.avernostudios.aquarius.soap.magento.ComplexFilter;
@@ -37,6 +37,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrderHelper {
     // El constructor privado no permite que se genere un constructor por defecto
@@ -84,6 +85,9 @@ public class OrderHelper {
      */
     private static Logger log = Logger.getLogger(OrderHelper.class);
     private static int storeId;
+
+    @Autowired
+    ProductRepository productRepository;
 
     /**
      *
@@ -191,7 +195,7 @@ public class OrderHelper {
         return productInfo;
     }
 
-    public void exportOrder(OutputStream out, String[] orderIds, SessionBean sessionBean, String handlerPortEndpointAddress, boolean sandbox) {
+    public void exportOrder(OutputStream out, String[] orderIds,Store workingStore, String handlerPortEndpointAddress, boolean sandbox) {
         SalesOrderEntity[] orderList;
         CustomerCustomerEntity customerInfo;
         SalesOrderItemEntity[] items;
@@ -226,9 +230,6 @@ public class OrderHelper {
                     DirectoryCountryEntity item = countryList[i];
                     listaPaises.put(item.getCountry_id(), item);
                 }
-
-
-                Store storeBean = sessionBean.getStoreInfoHash().get(sessionBean.getStoreId());
 
                 Calendar fechaActual = Calendar.getInstance();
 
@@ -360,7 +361,7 @@ public class OrderHelper {
                 cell.setCellValue("OBSERVACIONES");
                 cell.setCellStyle(style);
 
-                if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
+                if (workingStore.getId() != 17 && workingStore.getId() != 19) {
                     cell = cabecera.createCell(OrderHelper.MAGENTO_ID_NUM);
                     cell.setCellValue("MAGENTO ID");
                     cell.setCellStyle(style);
@@ -372,7 +373,7 @@ public class OrderHelper {
                     cell.setCellValue("Email Contacto");
                     cell.setCellStyle(style);
                     cell = cabecera.createCell(OrderHelper.CONSTANTE20_NUM);
-                    cell.setCellValue("M�todo de pago");
+                    cell.setCellValue("Método de pago");
                     cell.setCellStyle(style);
                 }
 
@@ -387,7 +388,7 @@ public class OrderHelper {
                 cell.setCellStyle(style);
 
                 cell = cabecera.createCell(OrderHelper.PAIS_NUM);
-                cell.setCellValue("Pa�s");
+                cell.setCellValue("País");
                 cell.setCellStyle(style);
 
                 cell = cabecera.createCell(OrderHelper.CONSTANTE25_NUM);
@@ -525,9 +526,9 @@ public class OrderHelper {
                         cell.setCellValue("");
                         cell.setCellStyle(style2);
 
-                        if (sessionBean.getStoreId() != 17 && sessionBean.getStoreId() != 19) {
+                        if (workingStore.getId() != 17 && workingStore.getId() != 19) {
                             cell = row.createCell(OrderHelper.MAGENTO_ID_NUM);
-                            cell.setCellValue(storeBean.getNemo() + "-" + orderInfo.getIncrement_id());
+                            cell.setCellValue(workingStore.getNemo() + "-" + orderInfo.getIncrement_id());
                             cell.setCellStyle(style2);
                             cell = row.createCell(OrderHelper.CONSTANTE20_NUM);
                             cell.setCellValue(orderInfo.getCustomer_email());
@@ -588,7 +589,7 @@ public class OrderHelper {
                                 }
 
                                 cell = row.createCell(OrderHelper.NUMEROPEDIDO_NUM);
-                                cell.setCellValue(String.format(storeBean.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
+                                cell.setCellValue(String.format(workingStore.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
                                 cell.setCellStyle(style2);
 
                                 cell = row.createCell(OrderHelper.TIPO_SERVICIO_NUM);
@@ -608,14 +609,14 @@ public class OrderHelper {
 
 
                                 cell = row.createCell(OrderHelper.SOLICITANTE_NUM);
-                                cell.setCellValue(storeBean.getRequester());
+                                cell.setCellValue(workingStore.getRequester());
                                 cell.setCellStyle(style2);
 
                                 String owner = "ERROR-01";
                                 try {
 
-                                    if (sessionBean.getProductInfoHash().containsKey(skuCompuesto)) {
-                                        Product productInfo = (Product) sessionBean.getProductInfoHash().get(skuCompuesto);
+                                    Product productInfo = productRepository.findBySku(skuCompuesto);
+                                    if (productInfo!=null) {
                                         owner = productInfo.getOwner();
                                         if (owner.equals("") || owner == null) {
                                             owner = "ERROR-02";
@@ -641,11 +642,11 @@ public class OrderHelper {
 
 
 
-                                                Product productInfoAdditional = (Product) sessionBean.getProductInfoHash().get(productInfo.getAdditional());
+                                                Product productInfoAdditional = productRepository.findBySku(productInfo.getAdditional());
                                                 owner = ( productInfo.getOwner() );
 
                                                 cell = row.createCell(OrderHelper.NUMEROPEDIDO_NUM);
-                                                cell.setCellValue(String.format(storeBean.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
+                                                cell.setCellValue(String.format(workingStore.getNemo() + "-%1$td%1$tm%1$ty%1$tH%1$tM-%2$d", fechaActual, pos));
                                                 cell.setCellStyle(style2);
 
                                                 cell = row.createCell(OrderHelper.TIPO_SERVICIO_NUM);
@@ -668,7 +669,7 @@ public class OrderHelper {
                                                 cell.setCellStyle(style2);
 
                                                 cell = row.createCell(OrderHelper.SOLICITANTE_NUM);
-                                                cell.setCellValue(storeBean.getRequester());
+                                                cell.setCellValue(workingStore.getRequester());
                                                 cell.setCellStyle(style2);
 
 
