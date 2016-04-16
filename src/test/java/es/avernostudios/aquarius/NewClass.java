@@ -6,6 +6,7 @@ package es.avernostudios.aquarius;
 
 import es.avernostudios.aquarius.bean.SessionBean;
 import es.avernostudios.aquarius.bean.Store;
+import es.avernostudios.aquarius.jpa.repositories.ProductRepository;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
 import es.avernostudios.aquarius.soap.helper.ProductInfoHelper;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
@@ -30,6 +31,9 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import es.avernostudios.aquarius.spring.config.RepositoryConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 
 import static org.junit.Assert.*;
@@ -39,14 +43,26 @@ import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author yrch
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {RepositoryConfig.class})
+@Slf4j
 public class NewClass {
+    private ProductRepository productRepository;
 
-    private static Logger log = Logger.getLogger(NewClass.class);
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+    
     SessionFactory sessionFactory = null;
 
     @Before
@@ -57,7 +73,7 @@ public class NewClass {
             File cfg = new File("src/test/java/com/gruporon2005/aquarius/hibernate.cfg.test.xml");
 
             System.out.println(cfg.getAbsoluteFile());
-            log.debug(cfg.getAbsolutePath());
+            LOGGER.debug(cfg.getAbsolutePath());
 
             sessionFactory = new Configuration().configure(cfg).buildSessionFactory();
 
@@ -111,10 +127,10 @@ public class NewClass {
 
         }
         catch (SQLException e) {
-            log.fatal("Exception",e);
+            LOGGER.error("Exception", e);
         }
         catch (NamingException e) {
-            log.fatal("Exception",e);
+            LOGGER.error("Exception",e);
 
         }
         finally {
@@ -141,7 +157,7 @@ public class NewClass {
                     conexion.close();
                 }
                 catch (SQLException e) {
-                    log.error("Exception",e);
+                    LOGGER.error("Exception",e);
                 }
                 conexion = null;
             }
@@ -153,7 +169,7 @@ public class NewClass {
 
     public void test2() {
         SalesOrderEntity orderInfo = OrderHelper.getInstance().getOrderInfo("100000289", "http://tienda.eleconomista.es/index.php/api/v2_soap/index/");
-        log.error(orderInfo.getCustomer_firstname());
+        LOGGER.error(orderInfo.getCustomer_firstname());
         assertTrue(orderInfo != null);
     }
 
@@ -172,7 +188,7 @@ public class NewClass {
             assertTrue(sessionId != null);
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -207,7 +223,7 @@ public class NewClass {
 
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -237,7 +253,7 @@ public class NewClass {
             assertTrue(orderList.length == 2);
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -267,7 +283,7 @@ public class NewClass {
             assertTrue(orderList.length > 2);
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }
 
@@ -295,11 +311,11 @@ public class NewClass {
 
 
             sessionBean.getStoreInfoHash().put(20, store);
-            sessionBean.setProductInfoHash(ProductInfoHelper.getInfo(sessionFactory.getCurrentSession()));
+            sessionBean.setProductInfoHash(ProductInfoHelper.getInstance().getInfo(productRepository.findAll()));
             OrderHelper.getInstance().exportOrder(out, orderIds, sessionBean, apiUrl, true);
         }
         catch (Exception e) {
-            log.debug("Exception", e);
+            LOGGER.debug("Exception", e);
 
         }
     }
@@ -326,14 +342,14 @@ public class NewClass {
           
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }finally{
         	if(sessionId != null && sessionId.length()>0){
         		try {
 					magento.endSession(sessionId);
 				} catch (RemoteException e) {
-					log.error("Exception",e);
+					LOGGER.error("Exception",e);
 				}
         	}
         }
@@ -367,14 +383,14 @@ public class NewClass {
              
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }finally{
         	if(sessionId != null && sessionId.length()>0){
         		try {
 					magento.endSession(sessionId);
 				} catch (RemoteException e) {
-					log.error("Exception",e);
+					LOGGER.error("Exception",e);
 				}
         	}
         }
@@ -403,14 +419,14 @@ public class NewClass {
             }
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }finally{
         	if(sessionId != null && sessionId.length()>0){
         		try {
 					magento.endSession(sessionId);
 				} catch (RemoteException e) {
-					log.error("Exception",e);
+					LOGGER.error("Exception",e);
 				}
         	}
         }
@@ -437,14 +453,14 @@ public class NewClass {
             assertTrue(result!=null);
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }finally{
         	if(sessionId != null && sessionId.length()>0){
         		try {
 					magento.endSession(sessionId);
 				} catch (RemoteException e) {
-					log.error("Exception",e);
+					LOGGER.error("Exception",e);
 				}
         	}
         }
@@ -474,21 +490,21 @@ public class NewClass {
             
            // SalesOrderEntity[]  result = magento.salesOrderList(sessionId, null);
             SalesOrderEntity[]  result2 = magento.salesOrderList(sessionId, filtros);
-            //log.debug("El numero de pedidos es : " + result.length);
+            //LOGGER.debug("El numero de pedidos es : " + result.length);
             //assertTrue(result!=null);
             assertTrue(result2!=null);
-            log.debug("El numero de pedidos ahora es : " + result2.length);
+            LOGGER.debug("El numero de pedidos ahora es : " + result2.length);
             //assertTrue(result.length>result2.length);
         }
         catch (Exception ex) {
-            log.error("Exception",ex);
+            LOGGER.error("Exception",ex);
             assertTrue(false);
         }finally{
         	if(sessionId != null && sessionId.length()>0){
         		try {
 					magento.endSession(sessionId);
 				} catch (RemoteException e) {
-					log.error("Exception",e);
+					LOGGER.error("Exception",e);
 				}
         	}
         }

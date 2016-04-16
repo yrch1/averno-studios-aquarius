@@ -6,13 +6,12 @@ import es.avernostudios.aquarius.util.HibernateUtil;
 import es.avernostudios.aquarius.soap.magento.CatalogInventoryStockItemEntity;
 import es.avernostudios.aquarius.soap.magento.Mage_Api_Model_Server_V2_HandlerPortType;
 import es.avernostudios.aquarius.soap.magento.MagentoServiceLocator;
-import java.util.HashMap;
+
+import java.util.*;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -27,52 +26,13 @@ public class ProductInfoHelper {
 
     private static Logger log = Logger.getLogger(ProductInfoHelper.class);
 
-    private ProductInfoHelper(){}
+    private static ProductInfoHelper ourInstance = new ProductInfoHelper();
 
-    @Autowired
-    static ProductRepository productRepository;
-
-    public static HashMap<String, Product> getInfo() {
-        HashMap<String, Product> result = new HashMap<>();
-
-
-        try {
-            Iterable<Product> listaProductos = productRepository.findAll();
-            for (Product product : listaProductos) {
-                result.put(product.getSku(), product);
-            }
-        } catch (Exception e) {
-            log.error("Exception",e);
-        }
-
-
-        return result;
+    public static ProductInfoHelper getInstance() {
+        return ourInstance;
     }
 
-    public static HashMap<String, Product> getInfo(Session session) {
-        HashMap<String, Product> result = new HashMap<String, Product>();
-
-
-        try {
-            session.beginTransaction();
-
-            List<Product> listaProductos = session.createQuery("from Product").list();
-
-            for (Product product : listaProductos) {
-
-                result.put(product.getSku(), product);
-
-            }
-
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
-            log.error("Exception",e);
-        }
-
-
-        return result;
+    private ProductInfoHelper() {
     }
 
     /**
@@ -83,7 +43,7 @@ public class ProductInfoHelper {
      * @param productsInfoListSize
      * @return
      */
-    public static List<Product> getInfoList(int offset, int pageSize, int[] productsInfoListSize, String fieldSort, String ascDesc) {
+    public List<Product> getInfoList(int offset, int pageSize, int[] productsInfoListSize, String fieldSort, String ascDesc) {
         List<Product> result = new ArrayList<Product>();
 
         try {
@@ -109,7 +69,7 @@ public class ProductInfoHelper {
         return result;
     }
 
-    public static Product getProductInfo(String sku) {
+    public Product getProductInfo(String sku) {
         Product result = null;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -130,7 +90,7 @@ public class ProductInfoHelper {
      * @param product
      * @return
      */
-    public static int add(Product product) {
+    public int add(Product product) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -150,12 +110,11 @@ public class ProductInfoHelper {
     }
 
     /**
-     * 
-     * @param session
+     *
      * @param sku
      * @return
      */
-    public static int delete(String sku) {
+    public int delete(String sku) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -177,7 +136,7 @@ public class ProductInfoHelper {
      * @param product
      * @return
      */
-    public static int update(Product product) {
+    public int update(Product product) {
         int result = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
@@ -201,7 +160,7 @@ public class ProductInfoHelper {
      * @param handlerPortEndpointAddress
      * @return
      */
-    public static List<CatalogInventoryStockItemEntity> getStockList(String[] productsIds, String handlerPortEndpointAddress) {
+    public List<CatalogInventoryStockItemEntity> getStockList(String[] productsIds, String handlerPortEndpointAddress) {
 
 
         List<CatalogInventoryStockItemEntity> result = null;
@@ -230,7 +189,7 @@ public class ProductInfoHelper {
      * @param sku
      * @return
      */
-    public static List<Product> searchProduct(String sku) {
+    public List<Product> searchProduct(String sku) {
         List<Product> result = null;
 
 
@@ -255,5 +214,11 @@ public class ProductInfoHelper {
 
         return result;
 
+    }
+
+    public Map<String,Product> getInfo(Iterable<Product> all) {
+        Map<String,Product> result = new HashMap<>();
+        all.forEach(p -> result.put(p.getSku(),p));
+        return result;
     }
 }

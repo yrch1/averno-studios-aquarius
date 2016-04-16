@@ -2,6 +2,7 @@ package es.avernostudios.aquarius.controllers;
 
 import es.avernostudios.aquarius.Constants;
 import es.avernostudios.aquarius.bean.SessionBean;
+import es.avernostudios.aquarius.jpa.repositories.StoreRepository;
 import es.avernostudios.aquarius.soap.helper.OrderHelper;
 import es.avernostudios.aquarius.soap.magento.AssociativeEntity;
 import es.avernostudios.aquarius.soap.magento.ComplexFilter;
@@ -29,6 +30,9 @@ public class SalesController {
     @Autowired
     SessionBean sessionBean;
 
+    @Autowired
+    StoreRepository storeRepository;
+
     @RequestMapping
     public ModelAndView index(@RequestParam(value = "storeId", required = false,defaultValue = "-1") int storeId
                           , @RequestParam(value = "offset", required = false,defaultValue = "-1") int offset
@@ -37,23 +41,23 @@ public class SalesController {
             ,Model model) {
 
         LOGGER.debug("/sales/");
+
+
         ModelAndView result = new ModelAndView();
 
         result.setViewName("sales/index");
 
 
-        sessionBean.init();
-
-        if (sessionBean != null) {
-            storeId = sessionBean.getStoreId();
-        } else {
-            //result = mapping.findForward("error");
+        if(sessionBean.isNew()){
+            sessionBean.init();
         }
 
 
         if (storeId != -1) {
             sessionBean.setStoreId(storeId);
         }
+
+        storeId = sessionBean.getStoreId();
 
         OrderHelper helperOrder1 = OrderHelper.getInstance();
 
