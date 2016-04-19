@@ -32,13 +32,12 @@ public class SalesController {
 
     @RequestMapping
     public ModelAndView index(@RequestParam(value = "storeId", required = false,defaultValue = "-1") int storeId
-                          , @RequestParam(value = "offset", required = false,defaultValue = "-1") int offset
+                          , @RequestParam(value = "offset", required = false,defaultValue = "0") int offset
             , @RequestParam(value = "pageSize", required = false,defaultValue = Constants.PAGE_SIZE+"") int pageSize
             , @RequestParam(value = "dateFrom", required = false,defaultValue = Constants.DEFAULT_DATE_FROM+"") int dateFrom
             ,HttpSession session) {
 
         LOGGER.debug("/sales/");
-
 
         ModelAndView result = new ModelAndView();
 
@@ -46,6 +45,7 @@ public class SalesController {
 
         if (storeId != -1||session.getAttribute(Constants.STORE_ID)==null) {
             session.setAttribute(Constants.STORE_ID,storeId);
+            session.setAttribute("storeList",storeRepository.findAll());
         }
 
         storeId = (int) session.getAttribute(Constants.STORE_ID);
@@ -76,12 +76,12 @@ public class SalesController {
             List<SalesOrderEntity> orderList = helperOrder1.getOrderList(filtros, offset, pageSize, orderListSize, handlerPortEndpointAddress);
 
 
-/*
-            request.setAttribute("numPages", (int) Math.ceil(orderListSize[0] / pageSize)+1);
-            request.setAttribute("orderList", orderList);
-            request.setAttribute("currentPage", (offset / pageSize) + 1);
-            request.setAttribute("pageSize", pageSize);
-            request.setAttribute(Constants.DATE_FROM_NAME, dateFrom);*/
+
+            result.addObject("numPages", (int) Math.ceil(orderListSize[0] / pageSize)+1);
+            result.addObject("orderList", orderList);
+            result.addObject("currentPage", (offset / pageSize) + 1);
+            result.addObject("pageSize", pageSize);
+            result.addObject(Constants.DATE_FROM_NAME, dateFrom);
         }
         return result;
     }

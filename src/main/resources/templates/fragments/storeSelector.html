@@ -1,0 +1,21 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<form id="salesForm" name="salesForm" action="">
+    <div class="storeSelect">
+        Selecci&oacute;r una una tienda
+        <select name="storeId">
+            <option value="0" th:selected="${storeId == -1}?selected">Todas las tiendas</option>
+            <option th:each="store: ${session.storeList}" th:value="${store.id}" th:text="${store.requester}" />
+        </select>
+        <input type="submit" class="button"  />
+    </div>
+</form>
+
+
+</body>
+</html>

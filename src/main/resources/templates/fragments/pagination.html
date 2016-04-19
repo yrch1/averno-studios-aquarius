@@ -1,0 +1,15 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div class="pagination">
+
+    <a th:class="${currentPage == pos}? current" th:each="pos : ${#numbers.sequence( 1, numPages/1)}"  th:href="@{${url}(offset=${(pos-1)*pageSize},pageSize=${pageSize},dateFrom=${dateFrom} ) }"  th:text="${pos}"/>
+
+</div>
+
+</body>
+</html>
