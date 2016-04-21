@@ -1,1 +1,2 @@
 docker run -p 3306:3306 --name aquariusDB -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=aquarius -e MYSQL_USER=soap -e MYSQL_PASSWORD=soap123  -d mysql/mysql-server:latest --lower_case_table_names=0
+docker start aquariusDB
