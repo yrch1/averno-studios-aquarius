@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/Aquarius">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/AquariusDB" password="soap123" type="javax.sql.DataSource" url="jdbc:mysql://192.168.46.97:3306/Aquarius" username="soap">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/AquariusDB" password="soap123" type="javax.sql.DataSource" url="jdbc:mysql://192.168.99.100:3306/aquarius" username="soap">
     </Resource>
 </Context>

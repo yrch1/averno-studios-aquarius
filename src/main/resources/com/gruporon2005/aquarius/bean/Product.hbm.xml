@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.gruporon2005.aquarius.bean">
-  <class name="Product" table="PRODUCT_INFO">
-    <id column="product_info_id" name="id">
+  <class name="Product" table="product">
+    <id column="product_id" name="id">
       <generator class="native"/>
     </id>
     <property column="sku" name="sku"/>
