@@ -9,50 +9,48 @@
 <body>
 <div class="contenido" layout:fragment="content">
     <div class="content">
-        <h1>Productos</h1>
+        <h1>Producto</h1>
         <div class="top">
             <input type="button" value="Volver atrás" class="button2" onclick="window.history.back();" />
+        </div>
+        <br/><br/>
 
-            <input type="submit" class="button" value="Añadir un nuevo producto" onClick="location.href='/aquarius/products/view';" />
-            <div th:if="${productList != null }">
-                <div th:replace="/fragments/pageSize(sortField='sku',ascDesc='ASC')" />
-            </div>
-        </div>
-        <div class="top">
-            <form action="">
-                <input type="text" name="q" th:value="${param.q[0]}" th:unless="${param.q == null}" />
-                <input type="submit" value="buscar" />
-            </form>
-        </div>
-        <div class="table">
-            <div class="row header">
-                <span class="cell"><a th:href="@{/products/(sortField='sku',ascDesc=${ascDesc},pageSize=${pageSize})}">Producto:</a></span>
-                <span class="cell"><a th:href="@{/products/(sortField='owner',ascDesc=${ascDesc},pageSize=${pageSize})}">Propietario:</a></span>
-                <span class="cell">Adicional:</span>
-                <span class="cell">Proveedor:</span>
-            </div>
 
-            <div th:if="${productList != null }">
-                <div th:each="product: ${productList}" class="row body">
-                    <span class="cell" th:text="${product.sku}" />
-                    <span class="cell" th:text="${product.owner}" />
-                    <span class="cell" th:text="${product.additional}" />
-                    <span class="cell" th:text="${product.supplier}" />
-                    <span class="cell"><a th:href="@{/products/{id}(id=${product.sku})}">Ver</a></span>
-                </div>
-            </div>
-        </div>
+        <form th:if="${product != null }" action="/Aquarius/actions/admin/products/update.do" name="updateProduct" id="updateProduct">
 
-        <div th:if="${productList != null }">
-            <div th:replace="/fragments/pagination(url='/products',numPages=${numPages},storeId=${session.storeId},pageSize=${pageSize},currentPage=${currentPage})" />
-        </div>
+            <label>Producto: </label><input class="required" type="text" readonly="readonly" name="sku" th:value="${product.sku}" />
+            <label>Propietario: </label><input class="required" type="text" name="owner" th:value="${product.owner}"/>
+            <label>Adicional: </label><input class="required" type="text" name="additional" th:value="${product.additional}" />
+            <label>Proveedor: </label><input type="text" name="supplier" th:value="${product.supplier}" />
+            <br/><br/><br/>
+            <input type="submit" value="Modificar" class="button float"  />
+
+        </form>
+        <form th:if="${product != null }" action="/Aquarius/actions/admin/products/delete.do" name="deleteProduct" class="float">
+            <input type="submit" value="Eliminar" class="button"  />
+            <input type="hidden" name="sku" th:value="${product.sku}"/>
+        </form>
+
+        <form th:if="${product == null }"  action="/Aquarius/actions/admin/products/add.do" name="addProduct" id="addProduct">
+
+            <label>Producto: </label><input class="required" type="text" name="sku" value="sku" />
+            <label>Propietario: </label><input class="required" type="text" name="owner" value="owner" />
+            <label>Adicional: </label><input class="required" type="text" name="additional" value="additional" />
+            <label>Proveedor: </label><input type="text" name="supplier" value="supplier" />
+            <input type="submit" value="Añadir" class="button"  />
+
+        </form>
 
 
 
     </div>
 </div>
 <script type="text/javascript">
-    jQuery('#menuProductos').addClass('current');
+    $(function() {
+        jQuery('#menuProductos').addClass('current');
+        jQuery("#addProduct").validate();
+        jQuery('#updateProduct').validate();
+    });
 </script>
 </body>
 </html>

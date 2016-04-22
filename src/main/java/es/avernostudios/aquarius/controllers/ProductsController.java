@@ -93,9 +93,9 @@ public class ProductsController {
     public ModelAndView product(@PathVariable String sku
             , HttpSession session) {
 
-        LOGGER.debug("/products/");
+        LOGGER.debug("/products/{sku}");
         ModelAndView result = new ModelAndView();
-
+        result.addObject("product",productRepository.findBySku(sku));
         result.setViewName("products/product");
         return  result;
     }
